@@ -1,8 +1,8 @@
-import { SIGNIN_FORM } from "../../Data/signIn"
+import { SIGNIN_FORM } from "../../data/signIn"
 import Input from "../../compontents/common/input"
 import  Loader  from "../../compontents/common/loader";
 import {useState} from 'react'
-import { styles } from "../../Data/styles";
+import { styles } from "../../data/styles";
 import { useForm , SubmitHandler}from "react-hook-form";
 import { ISignInForm } from "../../interfaces/auth";
 import { axiosInstace } from "../../config/axios.config";
@@ -81,7 +81,7 @@ const SignInPage = () => {
         <div className="w-4/6 my-20 mx-auto flex items-center shadow-2xl">
 
           <div className="w-1/2 h-signin">
-              <img className="h-signin block mx-auto" src="/src/assets/signin.jpg"/>
+              <img className="h-signin block mx-auto" src="/signin.jpg"/>
           </div>
 
           <form  onSubmit={handleSubmit(onSubmit)} className="h-signin w-1/2  text-gray-600 p-5 my-20 flex flex-col gap-2 justify-center items-center">

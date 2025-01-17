@@ -1,6 +1,6 @@
 import { useState } from "react"
 import TodoList from "../compontents/ui/todo"
-import Pagination from "../compontents/common/pagination"
+import Pagination from "../compontents/ui/pagination"
 import SelectList from "../compontents/common/selectList"
 
 

@@ -1,8 +1,8 @@
 import { useForm , SubmitHandler } from "react-hook-form"
 import Input from "../../compontents/common/input"
 import { ISignUpForm } from "../../interfaces/auth"
-import { styles } from "../../Data/styles"
-import { SIGNUP_FORM } from "../../Data/signUp"
+import { styles } from "../../data/styles"
+import { SIGNUP_FORM } from "../../data/signUp"
 import { axiosInstace } from "../../config/axios.config"
 import { toast } from "react-hot-toast"
 import { useState } from "react"
@@ -98,7 +98,7 @@ const SignUpPage = () => {
 
             </form>
 
-            <img className="w-1/2 h-signup" src="/src/assets/signup.jpg"/>
+            <img className="w-1/2 h-signup" src="/signup.jpg"/>
 
           </div>
         </div>

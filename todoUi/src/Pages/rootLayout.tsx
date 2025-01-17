@@ -1,10 +1,10 @@
 import {Outlet} from 'react-router-dom'
-import Header from '../compontents/common/header'
+import Navbar from '../compontents/ui/navbar'
 
 const RootLayout = () => {
     return (
         <> 
-            <Header />
+            <Navbar />
             <Outlet />
         </>
     )
