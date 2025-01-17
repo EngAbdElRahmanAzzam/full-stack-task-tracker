@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.h-signup{
+  height: 65vh;
+}
+
+.h-signin{
+  height: 50vh;
+}
+
+a[class="active"] {
+  color:white 
+}
