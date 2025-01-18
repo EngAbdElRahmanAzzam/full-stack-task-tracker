@@ -6,9 +6,9 @@ import { styles } from "../../data/styles";
 import { useForm , SubmitHandler}from "react-hook-form";
 import { ISignInForm } from "../../interfaces/auth";
 import { axiosInstace } from "../../config/axios.config";
-import { toast } from "react-hot-toast";
 import { AxiosError} from "axios";
 import { IErrorRespone } from "../../interfaces/api";
+import { errorToast, successToast } from "../../utils/toasts";
 
 const stylesSignin = {
   mainColor:"indigo-600",
@@ -23,51 +23,37 @@ const stylesSignin = {
 }
 
 const SignInPage = () => {
-  const {handleSubmit, register} = useForm<ISignInForm>()
    // states
+   const {handleSubmit, register} = useForm<ISignInForm>()
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   //handlers
-  const onSubmit:SubmitHandler<ISignInForm> = async (data)=>{
+  const onSubmit:SubmitHandler<ISignInForm> = async (dataForm)=>{
     setIsLoading(true)
     setIsDisabled(true)
     try{
-      const {data:resData} = await axiosInstace.post("/auth/local", data)
-      toast.success("Success Registering and Wellcome to our platform",
-              {
-                position:"top-right",
-                duration:1000,
-                style:stylesSignin.toastStyle
-              }
-          )
-          
-          localStorage.setItem('user', JSON.stringify(resData))
-
-          location.replace('/')
-      
-    }catch(e){
-      const error = e as AxiosError<IErrorRespone>
-      let msg:string = ""
-      if(error.response?.data.error == undefined)
-      {
-          msg = error.response?.statusText as string
+          const {data} = await axiosInstace.post("/users/sign-in", dataForm)
+          if(data.status == "success")
+          {
+            successToast("Success Registering and Wellcome to our platform",stylesSignin.toastStyle)
+            localStorage.setItem('user', data.data.token)
+            location.replace('/')
+          }
+      }catch(e){
+          const error = e as AxiosError<IErrorRespone>
+          let msg:string = ""
+          if(!error.response?.data.error == undefined)
+          {
+              msg = error.response?.data.error.message as string 
+          }
+          errorToast(`Failed login ${msg}`, {...stylesSignin.toastStyle, color:"red"})
+          setIsDisabled(false)
+      }finally{
+          setIsLoading(false)
       }
-      else{
-          msg = error.response?.data.error.message as string 
-      }
-      toast.error(`Failed login ${msg}`,
-              {
-                position:"top-right",
-                duration:4000,
-                style:{...stylesSignin.toastStyle, color:"red"}
-              }
-          )
-      setIsDisabled(false)
-    }finally{
-      setIsLoading(false)
-    }
   }
+
   //renders 
   const signInFormList = SIGNIN_FORM.map((currInput, index)=>(
 
@@ -76,6 +62,7 @@ const SignInPage = () => {
     </Input>
 
   ))
+
   return (
     <div>
         <div className="w-4/6 my-20 mx-auto flex items-center shadow-2xl">

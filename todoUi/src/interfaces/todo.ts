@@ -1,7 +1,7 @@
 export interface ITodo{
-    id?:number;
+    _id?:number;
     title:string;
-    discription:string;
+    description:string;
     deadline?:Date;
     achieved_at?:Date;
 }

@@ -9,7 +9,7 @@ import SignUpPage from '../Pages/Auth/signUp';
 import ProtectedRoute from '../compontents/auth';
 import ProfilePage from '../Pages/profile';
 
-const user = JSON.parse(localStorage.getItem('user')!)
+const user = localStorage.getItem('user')
 
 
 const router = createBrowserRouter(
@@ -17,7 +17,7 @@ const router = createBrowserRouter(
         <>
             <Route path='/home' element=<Navigate to="/"/> />
 
-            <Route path='/' element=<ProtectedRoute isAllowed={user?.jwt} redirect='/auth/signin'><RootLayout/></ProtectedRoute>>
+            <Route path='/' element=<ProtectedRoute isAllowed={user} redirect='/auth/signin'><RootLayout/></ProtectedRoute>>
                 <Route index element=<HomePage/> />
                 <Route path='todos' element=<ToDosPage/> />
                 <Route path='profile' element=<ProfilePage/> />
@@ -25,7 +25,7 @@ const router = createBrowserRouter(
 
             <Route path='/auth' element=<Navigate to="/auth/signin"/> />
 
-            <Route path='auth' element=<ProtectedRoute redirect='/' isAllowed={!user?.jwt}><AuthLayout/></ProtectedRoute> >
+            <Route path='auth' element=<ProtectedRoute redirect='/' isAllowed={!user}><AuthLayout/></ProtectedRoute> >
                 <Route path='signin' element=<SignInPage/> />
                 <Route path='signup' element=<SignUpPage/> />
             </Route>

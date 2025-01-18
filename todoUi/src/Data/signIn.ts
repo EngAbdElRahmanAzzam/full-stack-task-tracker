@@ -3,7 +3,7 @@ import { ISignInInput } from "../interfaces/auth";
 
 export const SIGNIN_FORM:ISignInInput[] = [
     {
-        name:"identifier",
+        name:"email",
         label:"Email",
     }
     ,

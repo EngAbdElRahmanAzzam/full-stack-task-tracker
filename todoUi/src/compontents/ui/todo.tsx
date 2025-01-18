@@ -26,13 +26,13 @@ const TodoList = ({numQuery, setNumQuery, children}:IProps) =>
     const [isOpenDeleteModel, setIsOpenDeleteModel] = useState<boolean>(false)
     const [selectedTodo, setSelectedTodo] = useState<ITodo>({
         title:"",
-        discription:"",
+        description:"",
     })
 
     const {isLoading, data:todos} = useQuery({
         queryKey:['todoList', `${numQuery}`],
         queryFn:async ()=>{
-            const {data} = await axiosInstaceAuth.get('http://localhost:1337/api/todos')  //'/users/me?populate=todos'
+            const {data} = await axiosInstaceAuth.get('/todos?limit=20&page=3')  
             return data.data
         }
     })
@@ -58,15 +58,14 @@ const TodoList = ({numQuery, setNumQuery, children}:IProps) =>
 
     const updateTodoSure = async()=>{
         setIsLoadingUpdate(true)
+        console.log(selectedTodo._id)
         try
         {
-            await axiosInstaceAuth.put(`/todos/${selectedTodo?.id}`, {
-                data:{
+            await axiosInstaceAuth.patch(`/todos/${selectedTodo?._id}`, {
+                
                 title:selectedTodo.title,
-                discription:selectedTodo.discription
-            }
+                description:selectedTodo.description
             })
-
             successToast("Updated sucessfully")
             setNumQuery(numQuery+1)
 
@@ -93,8 +92,9 @@ const TodoList = ({numQuery, setNumQuery, children}:IProps) =>
         setIsLoadingDelete(true)
         try
         {
-            await axiosInstaceAuth.delete(`/todos/${selectedTodo.id}`)
+            await axiosInstaceAuth.delete(`/todos/${selectedTodo._id}`)
             successToast("deleted sucessfully")
+            setNumQuery(numQuery+1)
 
         }catch(e)
         {   
@@ -125,7 +125,7 @@ const TodoList = ({numQuery, setNumQuery, children}:IProps) =>
     }
 
     const todosList = todos.map((currTodo:ITodo)=>(
-            <tr className="odd:bg-white even:bg-gray-100" key={currTodo.id}>
+            <tr className="odd:bg-white even:bg-gray-100" key={currTodo._id}>
                 <td className="border border-gray-300 text-center">{num++}</td>
                 <td className="border border-gray-300 px-4 py-2">{currTodo.title}</td>
                 <td className="border border-gray-300 text-center">
@@ -156,7 +156,7 @@ const TodoList = ({numQuery, setNumQuery, children}:IProps) =>
                         Title
                 </Input>
 
-                <textarea name="discription" onChange={onChangeHandler} placeholder="Discription" value={selectedTodo?.discription}  className="w-full p-2 my-3 h-30  border-2 rounded-lg resize-none focus:outline-none focus:border-indigo-600"></textarea>
+                <textarea name="description" onChange={onChangeHandler} placeholder="Description" value={selectedTodo?.description}  className="w-full p-2 my-3 h-30  border-2 rounded-lg resize-none focus:outline-none focus:border-indigo-600"></textarea>
 
                 <Button className="bg-sky-600 hover:bg-sky-300" onClick={updateTodoSure} disabled={isLoadingUpdate}>{(isLoadingUpdate)?<Loader/>:"Update"}</Button>
                 <Button className="bg-neutral-700 text-white hover:bg-neutral-300 ms-2" onClick={toggleUpdateModel}>Cancel</Button>

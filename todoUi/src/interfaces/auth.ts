@@ -18,7 +18,7 @@ export interface ISignUpForm{
 }
 
 export interface ISignInForm{
-    identifier:string;
+    email:string;
     password:string;
 }
 

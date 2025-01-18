@@ -26,7 +26,7 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [todoForm, setTodoForm] = useState<ITodo>({
         title:"",
-        discription:""
+        description:""
     })
     const [msgTitle, setMsgTitle] = useState<string|boolean>("")
     const [msgDisctipion, setMsgDisctipion] = useState<string|boolean>("")
@@ -37,60 +37,38 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
         setTodoForm({...todoForm,[e.target.name]:e.target.value})
     }
 
-    const onSubmitForm = async()=>{
-        setMsgTitle(stringValidation(todoForm.title, 5, 50))
-        setMsgDisctipion(stringValidation(todoForm.discription, 5, 500))
-        if(msgDisctipion === true && true === true)
-        { 
-        setIsLoading(true)
-        try{
-            await axiosInstaceAuth.post('/todos', {
-                data:todoForm
-            })
-            if(true)
-            {
-                successToast('Succesufully Adding todo')
-                setNumQuery(numQuery+1)
-            }
-        }catch(e)
-        {   
-            const error = e as AxiosError<IErrorRespone>
-            let msg:string = ""
-            if(error.response?.data.error == undefined)
-            {
-                msg = error.response?.statusText as string
-            }
-            else{
-                msg = error.response?.data.error.message as string 
-            }
-            errorToast(`Failed Adding Todo ${msg}`)
-        }finally{
-            setIsLoading(false)
-            toggleAddModel()
-        }
-        }
-    }
-
-    const onCancelForm = ()=>{
+    const resetTodo = ()=>{
         setTodoForm({
             title:"",
-            discription:""
+            description:""
         })
         setMsgDisctipion("")
         setMsgTitle("")
+    }
+    const onOpenAddModel = ()=>{
+        resetTodo()
         toggleAddModel()
     }
 
-    const generateTodos = async()=>{
-        let index:number = numTodo 
-        for(; index; index--)
-        {
+
+    const onSubmitForm = async()=>{
+        setMsgTitle(stringValidation(todoForm.title, 5, 50))
+        setMsgDisctipion(stringValidation(todoForm.description, 5, 500))
+        if(msgDisctipion === true && true === true)
+        { 
+            setIsLoading(true)
             try{
-                await axiosInstaceAuth.post('/todos', {
-                    data:{title:faker.word.words(4), discription:faker.book.series()+faker.word.words(20)}
-                })
+                console.log({...todoForm, status:false})
+                await axiosInstaceAuth.post(`/todos`, {
                 
-            successToast('Succesufully Adding todo')
+                    title:todoForm.title,
+                    description:todoForm.description,
+                    status:false
+                })
+                {
+                    successToast('Succesufully Adding todo')
+                    setNumQuery(numQuery+1)
+                }
             }catch(e)
             {   
                 const error = e as AxiosError<IErrorRespone>
@@ -103,13 +81,40 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
                     msg = error.response?.data.error.message as string 
                 }
                 errorToast(`Failed Adding Todo ${msg}`)
+            }finally{
+                setIsLoading(false)
+                toggleAddModel()
+            }
+        }
+    }
+
+
+    const generateTodos = async()=>{
+        let index:number = numTodo 
+        for(; index; index--)
+        {
+            try{
+                await axiosInstaceAuth.post(`/todos`, {
+                
+                    title:faker.word.words(4),
+                    description:faker.book.series()+faker.word.words(20),
+                    status:false
+                })
+                
+            successToast('Succesufully Adding todo')
+            }catch(e)
+            {   
+                const error = e as AxiosError<IErrorRespone>
+                let msg:string = ""
+                msg = error.message
+                errorToast(`Failed Adding Todo ${msg}`)
             }
         }
         setNumQuery(numQuery+1)
     }
 
 
-    return(
+    return( 
     <>
         <section className="text-black">
             <div className="mx-auto max-w-screen-xl h-screen px-4 py-32 lg:flex lg:items-center">
@@ -122,15 +127,15 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
 
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
                     <Button
-                    onClick={toggleAddModel}
-                    className="block w-full rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none active:scale-95 sm:w-auto"
+                    onClick={onOpenAddModel}
+                    className="block w-full rounded border border-indigo-600 bg-white px-12 py-3 text-sm font-medium text-indigo-600  hover:text-white hover:bg-indigo-600 focus:outline-none active:scale-95 sm:w-auto"
                     >
                     Add Todo
                     </Button>
 
                     <Button
                     onClick={generateTodos}
-                    className="block w-full rounded border border-indigo-600  px-12 py-3 text-sm font-medium text-indigo-600 hover:bg-transparent hover:text-white hover:bg-indigo-600 focus:outline-none active:scale-95 sm:w-auto"
+                    className="block w-full rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none active:scale-95 sm:w-auto"
                     >
                     Generate Todos
                     </Button>
@@ -156,8 +161,8 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
             </Input>
             {(msgTitle!=true)?<Error msg={msgTitle as string}/>:""}
             <textarea 
-                name="discription"
-                value={todoForm.discription} 
+                name="description"
+                value={todoForm.description} 
                 onChange={onChangeHandler}   
                 placeholder="Discription" 
                 className="w-full p-2 my-3 h-30  border-2 rounded-lg resize-none focus:outline-none focus:border-indigo-600"
@@ -170,7 +175,7 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
                     {(isLoading)?<Loader/>:"Add"}
             </Button>
 
-            <Button className="bg-neutral-700 text-white hover:bg-neutral-300 ms-2" onClick={onCancelForm}>Cancel</Button>
+            <Button className="bg-neutral-700 text-white hover:bg-neutral-300 ms-2" onClick={toggleAddModel}>Cancel</Button>
         </Model>
     </>
     )

@@ -1,17 +1,20 @@
 import axios , {AxiosInstance} from "axios";
 
+const hostServer = import.meta.env.VITE_DOMAIN_HOST 
+const timeout = import.meta.env.VITE_TIMEOUT
+
 export let axiosInstaceAuth:AxiosInstance;
 let user;
 
 if(localStorage.getItem('user')){ 
-    user = JSON.parse(localStorage.getItem('user') as string)
+    user = localStorage.getItem('user')
 
     axiosInstaceAuth = axios.create(
         {
-            baseURL:'http://localhost:1337/api',
-            timeout:4000,
+            baseURL:`${hostServer}/api/v1`,
+            timeout,
             headers:{
-                Authorization: `Bearer ${user.jwt}`
+                Authorization: user
             }
         }
     )
@@ -20,8 +23,8 @@ if(localStorage.getItem('user')){
 
 export const axiosInstace = axios.create(
     {
-        baseURL:'http://localhost:1337/api',
-        timeout:4000,
+        baseURL:`${hostServer}/api/v1`,
+        timeout,
     }
 )
 
