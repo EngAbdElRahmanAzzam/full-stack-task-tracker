@@ -26,7 +26,8 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [todoForm, setTodoForm] = useState<ITodo>({
         title:"",
-        description:""
+        description:"",
+        status : false
     })
     const [msgTitle, setMsgTitle] = useState<string|boolean>("")
     const [msgDisctipion, setMsgDisctipion] = useState<string|boolean>("")
@@ -40,7 +41,8 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
     const resetTodo = ()=>{
         setTodoForm({
             title:"",
-            description:""
+            description:"",
+            status:false
         })
         setMsgDisctipion("")
         setMsgTitle("")

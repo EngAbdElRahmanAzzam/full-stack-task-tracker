@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import LogoutIcon from "../../assets/icons/logout"
+import LogoutIcon from "../../assets/icons/logoutIcon"
 
  const Navbar = () => {
 

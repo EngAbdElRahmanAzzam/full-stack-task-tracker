@@ -2,13 +2,23 @@ import { ISignUpInput } from "../interfaces/auth";
 
 export const SIGNUP_FORM:ISignUpInput[] = [
     {
-        name:"username",
-        label:"Username",
+        name:"firstName",
+        label:"FirstName",
         validators:{
             required:"User name is required",
             minLength:3,
             maxLength:50
         }
+    }
+    ,
+    {
+        name:"lastName",
+        label:"E-mail",
+        validators:{
+            required:"User name is required",
+            minLength:3,
+            maxLength:50
+        } 
     }
     ,
     {

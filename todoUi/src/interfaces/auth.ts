@@ -12,7 +12,9 @@ interface IFormInput{
 }
 
 export interface ISignUpForm{
-    username:string;
+    firstName:string;
+    lastName:string;
+    mobile?:number;
     email:string;
     password:string;
 }

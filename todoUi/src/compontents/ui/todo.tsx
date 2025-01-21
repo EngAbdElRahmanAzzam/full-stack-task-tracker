@@ -27,6 +27,7 @@ const TodoList = ({numQuery, setNumQuery, children}:IProps) =>
     const [selectedTodo, setSelectedTodo] = useState<ITodo>({
         title:"",
         description:"",
+        status:false
     })
 
     const {isLoading, data:todos} = useQuery({
