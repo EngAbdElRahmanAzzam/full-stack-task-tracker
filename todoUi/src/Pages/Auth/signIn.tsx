@@ -43,9 +43,9 @@ const SignInPage = () => {
       }catch(e){
           const error = e as AxiosError<IErrorRespone>
           let msg:string = ""
-          if(!error.response?.data.error == undefined)
+          if(!error.response?.data.message != undefined)
           {
-              msg = error.response?.data.error.message as string 
+              msg = error.response?.data.message as string 
           }
           errorToast(`Failed login ${msg}`, {...stylesSignin.toastStyle, color:"red"})
           setIsDisabled(false)

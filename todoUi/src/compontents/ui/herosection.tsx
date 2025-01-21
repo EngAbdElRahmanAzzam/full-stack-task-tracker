@@ -34,10 +34,7 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
 
     //handlers
     const toggleAddModel = ()=> setIsOpenModel(prev => !prev)
-    const onChangeHandler = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
-        setTodoForm({...todoForm,[e.target.name]:e.target.value})
-    }
-
+    const onChangeHandler = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setTodoForm({...todoForm,[e.target.name]:e.target.value})
     const resetTodo = ()=>{
         setTodoForm({
             title:"",
@@ -47,6 +44,7 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
         setMsgDisctipion("")
         setMsgTitle("")
     }
+    
     const onOpenAddModel = ()=>{
         resetTodo()
         toggleAddModel()
@@ -75,12 +73,12 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
             {   
                 const error = e as AxiosError<IErrorRespone>
                 let msg:string = ""
-                if(error.response?.data.error == undefined)
+                if(error.response?.data.message == undefined)
                 {
                     msg = error.response?.statusText as string
                 }
                 else{
-                    msg = error.response?.data.error.message as string 
+                    msg = error.response?.data.message as string 
                 }
                 errorToast(`Failed Adding Todo ${msg}`)
             }finally{

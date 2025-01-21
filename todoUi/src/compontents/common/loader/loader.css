@@ -1,131 +1,34 @@
-#wifi-loader {
-  --front-color: #868686;
-  --back-color: #ffffff;
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  position: relative;
+.loader {
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-#wifi-loader svg {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.bar {
+  display: inline-block;
+  width: 2px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, .5);
+  border-radius: 10px;
+  animation: scale-up4 1s linear infinite;
 }
 
-#wifi-loader svg circle {
-  position: absolute;
-  fill: none;
-  stroke-width: 3px;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transform: rotate(-100deg);
-  transform-origin: center;
+.bar:nth-child(2) {
+  height: 15px;
+  margin: 0 3px;
+  animation-delay: .25s;
 }
 
-#wifi-loader svg circle.back {
-  stroke: var(--back-color);
+.bar:nth-child(3) {
+  animation-delay: .5s;
 }
 
-#wifi-loader svg circle.front {
-  stroke: var(--front-color);
-}
-
-#wifi-loader svg.circle-middle {
-  height: 30px;
-  width: 30px;
-}
-
-#wifi-loader svg.circle-middle circle {
-  stroke-dasharray: 42.5 127.5;
-}
-
-#wifi-loader svg.circle-middle circle.back {
-  animation: circle-middle6123 1.8s ease infinite 0.25s;
-}
-
-#wifi-loader svg.circle-middle circle.front {
-  animation: circle-middle6123 1.8s ease alternate-reverse infinite 0.1s;
-}
-
-#wifi-loader svg.circle-inner {
-  height: 20px;
-  width: 20px;
-}
-
-#wifi-loader svg.circle-inner circle {
-  stroke-dasharray: 22 66;
-}
-
-#wifi-loader svg.circle-inner circle.back {
-  animation: circle-inner162 1.8s ease infinite 0.2s;
-}
-
-#wifi-loader svg.circle-inner circle.front {
-  animation: circle-inner162 1.8s ease alternate-reverse infinite 0.05s;
-}
-
-
-
-@keyframes circle-middle6123 {
-  0% {
-    stroke-dashoffset: 17;
+@keyframes scale-up4 {
+  20% {
+    background-color: #ffff;
+    transform: scaleY(1.5);
   }
 
-  25% {
-    stroke-dashoffset: 0;
-  }
-
-  65% {
-    stroke-dashoffset: 204;
-  }
-
-  80% {
-    stroke-dashoffset: 187;
-  }
-
-  100% {
-    stroke-dashoffset: 187;
+  40% {
+    transform: scaleY(1);
   }
 }
-
-@keyframes circle-inner162 {
-  0% {
-    stroke-dashoffset: 9;
-  }
-
-  25% {
-    stroke-dashoffset: 0;
-  }
-
-  65% {
-    stroke-dashoffset: 106;
-  }
-
-  80% {
-    stroke-dashoffset: 97;
-  }
-
-  100% {
-    stroke-dashoffset: 97;
-  }
-}
-
-@keyframes text-animation76 {
-  0% {
-    clip-path: inset(0 100% 0 0);
-  }
-
-  50% {
-    clip-path: inset(0);
-  }
-
-  100% {
-    clip-path: inset(0 0 0 100%);
-  }
-}
- 
