@@ -18,11 +18,11 @@ const HomePage = () => {
           }
       })
     return (
-         <>
+         <div className="bg-gradient-to-r from-gray-50/50 via-indigo-800/30 to-gray-600/30">
           <HeroSection numQuery={numQuery} setNumQuery={setNumQuery} />
           <TitleSection>Recent Access</TitleSection>
           <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoading} todos={todos} />
-         </>
+         </div>
     )
   }
   
