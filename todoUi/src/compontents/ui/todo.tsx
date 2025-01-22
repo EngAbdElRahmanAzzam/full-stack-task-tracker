@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query"
 import Loader from "../common/loader"
 import { axiosInstaceAuth } from "../../config/axios.config"
 import { ITodo } from "../../interfaces/todo"
@@ -9,16 +8,20 @@ import { AxiosError } from "axios"
 import { IErrorRespone } from "../../interfaces/api"
 import Input from "../common/input"
 import { errorToast, successToast } from "../../utils/toasts"
+import CheckIcon from "../../assets/icons/chechIcon"
 
 interface IProps{
     numQuery:number;
-    setNumQuery:(val:number)=>void
+    setNumQuery:(val:number)=>void;
+    isLoading:boolean
+    todos:ITodo[]
 }
 
-const TodoList = ({numQuery, setNumQuery}:IProps) => 
+const TodoList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) => 
 {
     //states
     const [isLoadingUpdate, setIsLoadingUpdate] = useState<boolean>(false)
+    const [isLoadingUpdateStatus, setLoadingUpdateStatus] = useState<boolean>(false)
     const [isLoadingDelete, setIsLoadingDelete] = useState<boolean>(false)
     const [isOpenUpdateModel, setIsOpenUpdateModel] = useState<boolean>(false)
     const [isOpenDeleteModel, setIsOpenDeleteModel] = useState<boolean>(false)
@@ -26,14 +29,6 @@ const TodoList = ({numQuery, setNumQuery}:IProps) =>
         title:"",
         description:"",
         status:false
-    })
-
-    const {isLoading, data:todos} = useQuery({
-        queryKey:['todoList', `${numQuery}`],
-        queryFn:async ()=>{
-            const {data} = await axiosInstaceAuth.get('/todos?limit=20&page=3')  
-            return data.data
-        }
     })
 
     //handlers
@@ -45,23 +40,45 @@ const TodoList = ({numQuery, setNumQuery}:IProps) =>
         setSelectedTodo({...selectedTodo,[e.target.name]:e.target.value})
     }
 
-    const onUpdateTodoBtn = (todo:ITodo)=>{
-        setSelectedTodo(todo)
-        toggleUpdateModel()
-    }
 
-    const onRemoveTodoBtn = (todo:ITodo)=>{
+    const onUpdateTodoStatus = async (todo:ITodo)=>{
         setSelectedTodo(todo)
-        toggleDeleteModel()
+        console.log({title:selectedTodo.title,
+            description:selectedTodo.description,
+            status:true})
+        setLoadingUpdateStatus(true)
+        try
+        {
+            await axiosInstaceAuth.patch(`/todos/${selectedTodo?._id}`, {
+                title:selectedTodo.title,
+                description:selectedTodo.description,
+                status:true
+            })
+            successToast("Updated sucessfully")
+            setNumQuery(numQuery+1)
+
+        }catch(e)
+        {   
+            const error = e as AxiosError<IErrorRespone>
+            let msg:string = ""
+            if(error.response?.data == undefined)
+            {
+                msg = error.response?.statusText as string
+            }
+            else{
+                msg = error.response?.data.message as string 
+            }
+            errorToast(`Failed updating ${msg}`)
+        }finally{
+            setLoadingUpdateStatus(false)
+        }
     }
 
     const updateTodoSure = async()=>{
         setIsLoadingUpdate(true)
-        console.log(selectedTodo._id)
         try
         {
             await axiosInstaceAuth.patch(`/todos/${selectedTodo?._id}`, {
-                
                 title:selectedTodo.title,
                 description:selectedTodo.description
             })
@@ -124,12 +141,26 @@ const TodoList = ({numQuery, setNumQuery}:IProps) =>
     }
 
     const todosList = todos.map((currTodo:ITodo)=>(
-            <tr className="odd:bg-white even:bg-gray-100" key={currTodo._id}>
+            <tr 
+            className="odd:bg-white even:bg-gray-100" 
+            onClick={()=>setSelectedTodo(currTodo)}
+            key={currTodo._id}>
                 <td className="flex justify-between items-center px-4 py-2 lg:px-16">
-                    <p>{currTodo.title}</p>
+                    <div className="flex gap-1">
+                        {   
+                            (isLoadingUpdateStatus && currTodo._id == selectedTodo._id)?
+                            <Loader />
+                            :
+                            <CheckIcon 
+                            onClick={() => onUpdateTodoStatus(currTodo)}
+                            className={`w-5 ${(!currTodo.status)?"transition-all  hover:text-yellow-500 cursor-pointer":(isLoadingUpdateStatus)?"cursor-wait":"text-green-400"}`} 
+                            />
+                        }   
+                        <p className="cursor-pointer" onClick={toggleUpdateModel}>{currTodo.title}</p>
+                    </div>
                     <div className={`${(currTodo.status)?"text-green-400":""}`}>
-                        <Button className="bg-indigo-600 hover:bg-indigo-300 my-2" onClick={()=>onUpdateTodoBtn(currTodo)}>Update</Button>
-                        <Button className="bg-neutral-700 text-white ms-2 hover:bg-neutral-300 my-2" onClick={()=>onRemoveTodoBtn(currTodo)}>Remove</Button>
+                        <Button className="bg-indigo-600 hover:bg-indigo-300 my-2" onClick={toggleUpdateModel}>Update</Button>
+                        <Button className="bg-neutral-700 text-white ms-2 hover:bg-neutral-300 my-2" onClick={toggleDeleteModel}>Remove</Button>
                     </div>
                 </td>
             </tr>
