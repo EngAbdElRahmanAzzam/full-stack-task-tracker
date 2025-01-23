@@ -9,6 +9,7 @@ import { IErrorRespone } from "../../interfaces/api"
 import Input from "../common/input"
 import { errorToast, successToast } from "../../utils/toasts"
 import CheckIcon from "../../assets/icons/chechIcon"
+import { triggerBasicConfetti } from "../../utils/confettiEffect"
 
 interface IProps{
     numQuery:number;
@@ -16,6 +17,7 @@ interface IProps{
     isLoading:boolean
     todos:ITodo[]
 }
+
 
 const TodoList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) => 
 {
@@ -50,10 +52,9 @@ const TodoList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
         try
         {
             await axiosInstaceAuth.patch(`/todos/${selectedTodo?._id}`, {
-                title:selectedTodo.title,
-                description:selectedTodo.description,
                 status:true
             })
+            triggerBasicConfetti();
             successToast("Updated sucessfully")
             setNumQuery(numQuery+1)
 

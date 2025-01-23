@@ -13,7 +13,7 @@ const HomePage = () => {
      const {isLoading, data:todos} = useQuery({
           queryKey:['todoList', `${numQuery}`],
           queryFn:async ()=>{
-              const {data} = await axiosInstaceAuth.get('/todos?limit=20&page=3')  
+              const {data} = await axiosInstaceAuth.get('/todos/recent?limit=10')  
               return data.data
           }
       })

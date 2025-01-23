@@ -1,4 +1,4 @@
-import TaskIcon from "../assets/icons/TaskIcon"
+import TaskIcon from "../assets/icons/taskIcon"
 import CompletedTaskIcon from "../assets/icons/completedTaskIcon"
 import UnCompletedTaskIcon from "../assets/icons/uncompletedIcon"
 import Button from "../compontents/common/button"
