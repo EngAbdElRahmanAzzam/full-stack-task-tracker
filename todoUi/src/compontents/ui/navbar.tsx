@@ -10,8 +10,9 @@ import LogoutIcon from "../../assets/icons/logoutIcon"
     }
 
     return (
-        <header className="">
-            <ul className="bg-indigo-600 text-teal-650 text-lg p-5 flex items-center gap-2">
+        <header className="bg-indigo-600 text-teal-650 text-lg py-2 px-5 flex items-center">
+            <img className="w-32" src="/logo.png" />
+            <ul className=" p-5 flex items-center gap-2">
                 <li className="hover:text-white transition-all"><NavLink to="/">Home</NavLink></li>
                 <li className="hover:text-white transition-all"><NavLink to="/todos">Todos</NavLink></li>
                 <li className="px-2 ms-auto border-e-4 border-white hover:text-white transition-all"><NavLink to="/profile">Profile</NavLink></li>

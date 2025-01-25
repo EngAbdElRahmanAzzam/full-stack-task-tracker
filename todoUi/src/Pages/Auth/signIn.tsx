@@ -37,7 +37,7 @@ const SignInPage = () => {
           if(data.status == "success")
           {
             successToast("Success Registering and Wellcome to our platform",stylesSignin.toastStyle)
-            localStorage.setItem('user', data.data.token)
+            localStorage.setItem('user', JSON.stringify(data.data))
             location.replace('/')
           }
       }catch(e){
