@@ -7,13 +7,12 @@ import { axiosInstaceAuth } from "../config/axios.config"
 
 
 const HomePage = () => {
-
      //states 
      const [numQuery, setNumQuery] = useState<number>(0)
      const {isLoading:isLoadingRecentAdded, data:todosRecentAdded} = useQuery({
           queryKey:['todoList', `${numQuery}`],
           queryFn:async ()=>{
-              const {data} = await axiosInstaceAuth.get('/todos?sort=add')  
+              const {data} = await axiosInstaceAuth.get('/todos?sort=add&limit=10')  
               return data.data.todos
           }
       })
@@ -21,7 +20,7 @@ const HomePage = () => {
      const {isLoading:isLoadingRecentAccess, data:todosRecentAccess} = useQuery({
           queryKey:['todoList', `${numQuery}`],
           queryFn:async ()=>{
-              const {data} = await axiosInstaceAuth.get('/todos?sort=recent')  
+              const {data} = await axiosInstaceAuth.get('/todos?sort=recent&limit=10')  
               return data.data.todos
           }
      })

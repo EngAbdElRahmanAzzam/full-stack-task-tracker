@@ -13,7 +13,7 @@ export const SIGNUP_FORM:ISignUpInput[] = [
     ,
     {
         name:"lastName",
-        label:"E-mail",
+        label:"LastName",
         validators:{
             required:"User name is required",
             minLength:3,

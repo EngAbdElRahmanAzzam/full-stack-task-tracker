@@ -48,7 +48,7 @@ const SignUpPage = () => {
       }catch(e)
       {
         const error = e as AxiosError<IErrorRespone>
-        toast.error(`Error ${error.status}!!! ${error.response?.data.error.message} and try again`,
+        toast.error(`Error ${error.status}!!! ${error.response?.data.message} and try again`,
               {
                 position:"top-right",
                 duration:4000,
@@ -75,7 +75,7 @@ const SignUpPage = () => {
 
     return (
       <div>
-          <div className="w-4/6 mx-auto flex items-center">
+          <div className="w-4/6 mx-auto flex sm:flex-col lg:flex-row items-center">
 
             <form className="h-signup w-1/2 bg-slate-100 p-5 my-20 flex flex-col gap-2 justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
 
@@ -103,6 +103,7 @@ const SignUpPage = () => {
           </div>
         </div>
     )
+    
   }
   
   export default SignUpPage

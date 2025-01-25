@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 :root{
-  --main-color:rgb(27, 25, 25);
-  --second-color:rgb(50 30 180 / var(--tw-bg-opacity, 1));
-  --hover-color:gray
+  --main-color:rgb(76, 63, 120);
+  --second-color:rgb(44, 33, 111);
+  --hover-color:rgb(176, 169, 169);
 }
 
 ::selection{
@@ -14,14 +14,14 @@
 
 /* scrollbar */
 ::-webkit-scrollbar{
-  width: 10px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track{
   background-color: var(--main-color);
 }
 ::-webkit-scrollbar-thumb{
   background-color: var(--second-color);
-  border: 2px solid var(--hover-color);
+  border: 1px solid var(--hover-color);
   border-radius: 20px;
   cursor: url(./assets/icons/rope.png), pointer;
 }
