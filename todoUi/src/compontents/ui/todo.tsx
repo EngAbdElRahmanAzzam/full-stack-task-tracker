@@ -45,9 +45,6 @@ const TodoList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
 
     const onUpdateTodoStatus = async (todo:ITodo)=>{
         setSelectedTodo(todo)
-        console.log({title:selectedTodo.title,
-            description:selectedTodo.description,
-            status:true})
         setLoadingUpdateStatus(true)
         try
         {
