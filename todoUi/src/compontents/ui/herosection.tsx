@@ -116,7 +116,7 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
 
     return( 
     <>
-        <section className="text-black">
+        <section className="text-black bg-gradient-to-r from-gray-50/50 via-indigo-800/30 to-gray-600/30">
             <div className="mx-auto max-w-screen-xl h-screen px-4 py-32 lg:flex lg:items-center">
                 <div className="mx-auto max-w-3xl text-center">
                 <h1

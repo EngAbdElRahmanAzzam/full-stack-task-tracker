@@ -10,18 +10,29 @@ const HomePage = () => {
 
      //states 
      const [numQuery, setNumQuery] = useState<number>(0)
-     const {isLoading, data:todos} = useQuery({
+     const {isLoading:isLoadingRecentAdded, data:todosRecentAdded} = useQuery({
           queryKey:['todoList', `${numQuery}`],
           queryFn:async ()=>{
-              const {data} = await axiosInstaceAuth.get('/todos')  
+              const {data} = await axiosInstaceAuth.get('/todos?sort=add')  
               return data.data.todos
           }
       })
+
+     const {isLoading:isLoadingRecentAccess, data:todosRecentAccess} = useQuery({
+          queryKey:['todoList', `${numQuery}`],
+          queryFn:async ()=>{
+              const {data} = await axiosInstaceAuth.get('/todos?sort=recent')  
+              return data.data.todos
+          }
+     })
+
     return (
-         <div className="bg-gradient-to-r from-gray-50/50 via-indigo-800/30 to-gray-600/30">
-          <HeroSection numQuery={numQuery} setNumQuery={setNumQuery} />
-          <TitleSection>Recent Access</TitleSection>
-          <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoading} todos={todos} />
+         <div>
+               <HeroSection numQuery={numQuery} setNumQuery={setNumQuery} />
+               <TitleSection>Recent Access</TitleSection>
+               <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoadingRecentAccess} todos={todosRecentAdded} />
+               <TitleSection>Recent Added</TitleSection>
+               <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoadingRecentAdded} todos={todosRecentAccess} />
          </div>
     )
   }

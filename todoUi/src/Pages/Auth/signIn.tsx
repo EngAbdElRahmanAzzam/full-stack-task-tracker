@@ -27,7 +27,7 @@ const SignInPage = () => {
    const {handleSubmit, register} = useForm<ISignInForm>()
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [isDisabled, setIsDisabled] = useState<boolean>(false);
-
+  const [isHidePassword, setIsHidePassword] = useState<boolean>(false)
   //handlers
   const onSubmit:SubmitHandler<ISignInForm> = async (dataForm)=>{
     setIsLoading(true)
@@ -56,35 +56,34 @@ const SignInPage = () => {
 
   //renders 
   const signInFormList = SIGNIN_FORM.map((currInput, index)=>(
-
     <Input className={`focus:border-indigo-600`}  key={index} {...register(currInput.name)} type={currInput.name}>
           {currInput.label}
     </Input>
-
   ))
 
   return (
     <div>
-        <div className="w-4/6 my-20 mx-auto flex items-center shadow-2xl">
-
-          <div className="w-1/2 h-signin">
-              <img className="h-signin block mx-auto" src="/signin.jpg"/>
-          </div>
-
-          <form  onSubmit={handleSubmit(onSubmit)} className="h-signin w-1/2  text-gray-600 p-5 my-20 flex flex-col gap-2 justify-center items-center">
-
-              <h2 className="font-semibold text-xl mb-2 text-indigo-600">
+        <div className="md:w-4/6 my-12 pt-14  mx-auto shadow-2xl">
+          <h2 className="font-semibold text-2xl  text-indigo-600 text-center">
                 Wellcome back to Progress Tracker Platform
-              </h2>
+          </h2>
 
-              {signInFormList}
+          <div className="flex flex-col lg:flex-row items-center ">
 
-              <button disabled={isDisabled} className={`bg-indigo-600 text-white w-${stylesSignin.inputWidth} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}>
-                {isLoading?<Loader />:"Sign in"}
-              </button>
+            <div className="w-1/2">
+                <img className="block mx-auto" src="/signin.jpg"/>
+            </div>
 
-          </form>
+            <form  onSubmit={handleSubmit(onSubmit)} className="h-signin w-1/2  text-gray-600 p-5 lg:my-20 flex flex-col gap-2 justify-center items-center">
 
+                {signInFormList}
+
+                <button disabled={isDisabled} className={`bg-indigo-600 text-white w-${stylesSignin.inputWidth} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}>
+                  {isLoading?<Loader />:"Sign in"}
+                </button>
+
+            </form>
+          </div>
         </div>
       </div>
   )

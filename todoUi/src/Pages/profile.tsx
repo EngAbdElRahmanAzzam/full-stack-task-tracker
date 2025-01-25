@@ -10,16 +10,17 @@ import { errorToast, successToast } from "../utils/toasts"
 import { AxiosError } from "axios"
 import { IErrorRespone } from "../interfaces/api"
 
+type TMsgWarning = "Account" | "Tasks" | ""
 const ProfilePage = () => {
     const user = JSON.parse(localStorage?.getItem('user') || "")
     //states 
-    const [msgWarning , setMsgWarning] = useState<string>("")
+    const [msgWarning , setMsgWarning] = useState<TMsgWarning>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isOpenModel, setIsOpenModel] = useState<boolean>(false)
 
     // handlesr
     const toggleModel = ()=> setIsOpenModel((prev) => !prev)
-    const onClickOpenModelBtn = (msg:string)=>{
+    const onClickOpenModelBtn = (msg:TMsgWarning)=>{
         setMsgWarning(msg)
         toggleModel()
     }
@@ -66,7 +67,10 @@ const ProfilePage = () => {
                     <h2 className="font-semibold">
                         {`${user.user.firstName}  ${user.user.lastName}`}
                     </h2>
-                    <p className="text-gray-500">abdelrahmanazzam@gmail.com</p>
+
+                    <p className="text-gray-500">
+                        {user.user.email}
+                    </p>
                 </div>
 
                 <ul className="w-7/12 py-4 mt-2 mx-auto text-neutral-700 flex items-center justify-around">
@@ -86,7 +90,7 @@ const ProfilePage = () => {
 
                 <div className="py-2 flex justify-center gap-1 border-t-2 border-t-slate-700">
                     <Button className="bg-red-600 hover:bg-red-800 my-2" onClick={()=>onClickOpenModelBtn("Account")}>Delete Account</Button>
-                    <Button className="bg-neutral-700 text-white ms-2 hover:bg-neutral-300 my-2" onClick={()=>onClickOpenModelBtn("Todos")}>Reset All Todos</Button>
+                    <Button className="bg-neutral-700 text-white ms-2 hover:bg-neutral-300 my-2" onClick={()=>onClickOpenModelBtn("Tasks")}>Reset All Tasks</Button>
                 </div>
             </div>
             <Model isOpenModel={isOpenModel} closeModel={toggleModel} title={msgWarning+"Deleting"}>
