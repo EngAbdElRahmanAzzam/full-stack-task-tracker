@@ -3,42 +3,37 @@ import { ISignUpInput } from "../interfaces/auth";
 export const SIGNUP_FORM:ISignUpInput[] = [
     {
         name:"firstName",
-        label:"FirstName",
-        validators:{
-            required:"User name is required",
-            minLength:3,
-            maxLength:50
-        }
+        label:"First Name",
+        type:"text",
+        placeholder:"Enter Your First Name must 4-50",
     }
     ,
     {
         name:"lastName",
-        label:"LastName",
-        validators:{
-            required:"User name is required",
-            minLength:3,
-            maxLength:50
-        } 
+        label:"Last Name",
+        type:"text",
+        placeholder:"Enter Your Last Name must 4-50",
     }
     ,
     {
         name:"email",
         label:"E-mail",
-        validators:{
-            required:"User email is required",
-            pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        } 
+        type:"email",
+        placeholder:"Enter Your E-mail",
     }
     ,
     {
         name:"password",
+        label:"Password",
         type:"password",
-        label:"password",
-        validators:{
-            required:"User password is required",
-            minLength:10,
-            maxLength:50
-        }
+        placeholder:"Enter Password  must 8-80",
+    }
+    ,
+    {
+        name:"re_password",
+        label:"Confirm Password",
+        type:"password",
+        placeholder:"Please confirm Password",
     }
     
 ]

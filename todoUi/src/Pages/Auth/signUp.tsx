@@ -1,14 +1,14 @@
 import { useForm , SubmitHandler } from "react-hook-form"
 import Input from "../../compontents/common/input"
-import { ISignUpForm } from "../../interfaces/auth"
+import { TSignUpForm, signUpSchema } from "../../validation/signUpSchema"
 import { styles } from "../../data/styles"
 import { SIGNUP_FORM } from "../../data/signUp"
 import { axiosInstace } from "../../config/axios.config"
 import { toast } from "react-hot-toast"
-import { useState } from "react"
 import  Loader  from "../../compontents/common/loader"
 import { AxiosError } from "axios"
 import { IErrorRespone } from "../../interfaces/api"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 
 const signUpStyles = {
@@ -21,19 +21,15 @@ const signUpStyles = {
 }
 
 const SignUpPage = () => {
-    const {register, handleSubmit, formState:{errors}} = useForm<ISignUpForm>()
-    // states
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isDisabled, setIsDisabled] = useState<boolean>(false);
+    const {register, handleSubmit, formState:
+      {
+        errors,
+        isSubmitting
+      }}                                            = useForm<TSignUpForm>({resolver:zodResolver(signUpSchema)})
 
     // handlers
-    const onSubmit:SubmitHandler<ISignUpForm> =async (data)=>  {
-
-      setIsDisabled(true)
-      setIsLoading(true)
-
+    const onSubmit:SubmitHandler<TSignUpForm> =async (data)=>  {
       try{
-
         const {data:resData} = await axiosInstace.post('auth/local/register', data)
           toast.success("Success Registering and Wellcome to our platform",
               {
@@ -55,18 +51,21 @@ const SignUpPage = () => {
                 style:signUpStyles.style
               }
           )
-        setIsDisabled(false);
-      }finally{
-        setIsLoading(false)
       }
 
     }
     //render
-    const signUpFormList = SIGNUP_FORM.map((currInput, index)=>(
+    const signUpFormList = SIGNUP_FORM.map((input, index)=>(
       <>
 
-        <Input key={index} {...register(currInput.name,currInput.validators)} type={currInput.type as string}>
-          {currInput.label}
+        <Input key={index}
+        id={input.name}
+        type={input.type}
+        placeholder={input.placeholder} 
+        register={register(input.name)}
+        error={errors[input.name]}
+        >
+          {input.label}
         </Input>
 
         {/* {errors?[currInput.name]&&} */}
@@ -92,8 +91,8 @@ const SignUpPage = () => {
                   </label>
                 </div>  
 
-                <button className={`bg-${styles.mainColor} bg-red-300 w-${styles.inputWidth} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`} disabled={isDisabled}>
-                  {isLoading?<Loader />:"Sign up"}
+                <button className={`bg-${styles.mainColor} bg-red-300 w-${styles.inputWidth} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`} disabled={isSubmitting}>
+                  {isSubmitting?<Loader />:"Sign up"}
                 </button>
 
             </form>

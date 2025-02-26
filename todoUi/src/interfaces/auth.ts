@@ -1,23 +1,11 @@
+import { TSignUpForm } from "../validation/signUpSchema";
+
 interface IFormInput{
     label:string;
-    type?:string;
-    validators?:{
-        required?:string;
-        min?:number;
-        max?:number;
-        minLength?:number;
-        maxLength?:number;
-        pattern?:RegExp;
-    }
+    type:string;
+    placeholder:string;
 }
 
-export interface ISignUpForm{
-    firstName:string;
-    lastName:string;
-    mobile?:number;
-    email:string;
-    password:string;
-}
 
 export interface ISignInForm{
     email:string;
@@ -25,7 +13,7 @@ export interface ISignInForm{
 }
 
 export interface ISignUpInput extends IFormInput{
-    name:keyof ISignUpForm;
+    name:keyof TSignUpForm;
 }
 
 export interface ISignInInput extends IFormInput{
