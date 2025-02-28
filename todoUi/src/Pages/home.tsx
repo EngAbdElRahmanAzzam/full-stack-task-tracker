@@ -4,6 +4,7 @@ import TodoList from "../compontents/ui/todo"
 import TitleSection from "../compontents/common/titleSection"
 import { useQuery } from "@tanstack/react-query"
 import { axiosInstaceAuth } from "../config/axios.config"
+import NoTodo from "../compontents/ui/noTodo"
 
 
 const HomePage = () => {
@@ -17,10 +18,10 @@ const HomePage = () => {
           }
       })
 
-     const {isLoading:isLoadingRecentAccess, data:todosRecentAccess} = useQuery({
+     const {isLoading:isLoadingRecentUpdated, data:todosRecentUpdated} = useQuery({
           queryKey:['todoList', `${numQuery}`],
           queryFn:async ()=>{
-              const {data} = await axiosInstaceAuth.get('/todos?sort=recent&limit=10')  
+              const {data} = await axiosInstaceAuth.get('/todos?sort=update&limit=10')  
               return data.data.todos
           }
      })
@@ -28,10 +29,10 @@ const HomePage = () => {
     return (
          <div>
                <HeroSection numQuery={numQuery} setNumQuery={setNumQuery} />
-               <TitleSection>Recent Access</TitleSection>
-               <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoadingRecentAccess} todos={todosRecentAdded} />
+               <TitleSection>Recent Updated</TitleSection>
+               <NoTodo/>
                <TitleSection>Recent Added</TitleSection>
-               <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoadingRecentAdded} todos={todosRecentAccess} />
+               <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoadingRecentAdded} todos={todosRecentAdded} />
          </div>
     )
   }

@@ -10,6 +10,7 @@ import Input from "../common/input"
 import { errorToast, successToast } from "../../utils/toasts"
 import CheckIcon from "../../assets/icons/chechIcon"
 import { triggerBasicConfetti } from "../../utils/confettiEffect"
+import NoTodo from "./noTodo"
 
 interface IProps{
     numQuery:number;
@@ -135,7 +136,7 @@ const TodoList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
 
     if(todos == undefined || todos.length == 0)
     {
-        return "no todos to display"
+        return <NoTodo/>
     }
 
     const todosList = todos.map((currTodo:ITodo)=>(

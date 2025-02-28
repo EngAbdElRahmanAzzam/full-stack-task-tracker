@@ -1,5 +1,5 @@
 import { useForm , SubmitHandler } from "react-hook-form"
-import Input from "../../compontents/common/input"
+import Input, { InputFormPassword } from "../../compontents/common/input"
 import { TSignUpForm, signUpSchema } from "../../validation/signUpSchema"
 import { styles } from "../../data/styles"
 import { SIGNUP_FORM } from "../../data/signUp"
@@ -9,6 +9,7 @@ import  Loader  from "../../compontents/common/loader"
 import { AxiosError } from "axios"
 import { IErrorRespone } from "../../interfaces/api"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Fragment } from "react/jsx-runtime"
 
 
 const signUpStyles = {
@@ -21,16 +22,19 @@ const signUpStyles = {
 }
 
 const SignUpPage = () => {
-    const {register, handleSubmit, formState:
-      {
-        errors,
-        isSubmitting
-      }}                                            = useForm<TSignUpForm>({resolver:zodResolver(signUpSchema)})
+    const {register, handleSubmit, formState:{ errors, isSubmitting } }= useForm<TSignUpForm>({resolver:zodResolver(signUpSchema)})
 
     // handlers
     const onSubmit:SubmitHandler<TSignUpForm> =async (data)=>  {
+      const requestBody = {
+        firstName:data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        mobile:data.phone,
+        password: data.password
+      } 
       try{
-        const {data:resData} = await axiosInstace.post('auth/local/register', data)
+        const {data:resData} = await axiosInstace.post('users/sign-up', requestBody)
           toast.success("Success Registering and Wellcome to our platform",
               {
                 position:"top-right",
@@ -38,13 +42,18 @@ const SignUpPage = () => {
                 style:signUpStyles.style
               }
           )
-        localStorage.setItem('user', JSON.stringify(resData));
-        location.replace('/')
+          localStorage.setItem('user', JSON.stringify(resData.data))
+          location.replace('/')
 
       }catch(e)
       {
         const error = e as AxiosError<IErrorRespone>
-        toast.error(`Error ${error.status}!!! ${error.response?.data.message} and try again`,
+        let errorMsg = error.response?.data.message
+        if(!errorMsg)
+        {
+          errorMsg = "Bad request"
+        }
+        toast.error(`${error.response?.data.message} !!! and try again`,
               {
                 position:"top-right",
                 duration:4000,
@@ -54,11 +63,12 @@ const SignUpPage = () => {
       }
 
     }
+
     //render
     const signUpFormList = SIGNUP_FORM.map((input, index)=>(
-      <>
 
-        <Input key={index}
+      <Fragment key={index}>
+        <Input 
         id={input.name}
         type={input.type}
         placeholder={input.placeholder} 
@@ -67,42 +77,57 @@ const SignUpPage = () => {
         >
           {input.label}
         </Input>
+      </Fragment>
 
-        {/* {errors?[currInput.name]&&} */}
-      </>
     ))
 
     return (
       <div>
-          <div className="w-4/6 mx-auto flex sm:flex-col lg:flex-row items-center">
+            <div className="bg-[#d8dde3] w-fit min-h-[500] pr-16 md:my-20 mx-auto shadow-2xl flex flex-col lg:flex-row items-center">
 
-            <form className="h-signup w-1/2 bg-slate-100 p-5 my-20 flex flex-col gap-2 justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
+              <form className="w-fit h-full py-4 px-16 mx-auto flex flex-col gap-2 justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
 
-                <h2>
-                  Wellcome to Progress Tracker Platform
-                </h2>
+                  <h2 className="font-semibold text-2xl  text-red-300 text-center">
+                    Wellcome to Progress Tracker Platform
+                  </h2>
 
-                {signUpFormList}
+                  {signUpFormList} 
 
-                <div className="flex gap-2">
-                  <input type="radio" className={`accent-${styles.mainColor} cursor-pointer`} id="terms" required/>
-                  <label htmlFor="terms" className="cursor-pointer">
-                      I Agree with all terms
-                  </label>
-                </div>  
+                  <InputFormPassword
+                  id="password"
+                  placeholder="Enter Password  must 8-80" 
+                  register={register("password")}
+                  error={errors.password}
+                  >
+                    Password
+                  </InputFormPassword>
 
-                <button className={`bg-${styles.mainColor} bg-red-300 w-${styles.inputWidth} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`} disabled={isSubmitting}>
-                  {isSubmitting?<Loader />:"Sign up"}
-                </button>
+                  <InputFormPassword
+                  id="repeatPassword"
+                  placeholder="Confirm Password" 
+                  register={register("re_password")}
+                  error={errors.re_password}
+                  >
+                    Repeat Password
+                  </InputFormPassword>
 
-            </form>
+                  <button className={`bg-${styles.mainColor} bg-red-300 w-${styles.inputWidth} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`} disabled={isSubmitting}>
+                    {isSubmitting?<Loader />:"Sign up"}
+                  </button>
 
-            <img className="w-1/2 h-signup" src="/signup.jpg"/>
+              </form>
 
-          </div>
-        </div>
+              <img className="block h-full object-cover" src="/signup.jpg"/>
+
+            </div>
+      </div>
+        
     )
     
   }
   
   export default SignUpPage
+
+
+
+  

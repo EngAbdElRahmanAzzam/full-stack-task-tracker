@@ -23,17 +23,10 @@ export const SIGNUP_FORM:ISignUpInput[] = [
     }
     ,
     {
-        name:"password",
-        label:"Password",
-        type:"password",
-        placeholder:"Enter Password  must 8-80",
-    }
-    ,
-    {
-        name:"re_password",
-        label:"Confirm Password",
-        type:"password",
-        placeholder:"Please confirm Password",
+        name:"phone",
+        label:"phone",
+        type:"tel",
+        placeholder:"Enter Phone  12 digit",
     }
     
 ]
