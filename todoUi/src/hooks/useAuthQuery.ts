@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { axiosInstaceAuth } from "../config/axios.config";
+import { axiosInstaceAuth } from "../services/axios.config";
 
 interface IAuthQuery{
     queryKey:string[]

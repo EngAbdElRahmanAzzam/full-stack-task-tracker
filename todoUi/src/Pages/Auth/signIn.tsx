@@ -5,7 +5,7 @@ import {useState} from 'react'
 import { styles } from "../../data/styles";
 import { useForm , SubmitHandler}from "react-hook-form";
 import { ISignInForm } from "../../interfaces/auth";
-import { axiosInstace } from "../../config/axios.config";
+import { axiosInstace } from "../../services/axios.config";
 import { AxiosError} from "axios";
 import { IErrorRespone } from "../../interfaces/api";
 import { errorToast, successToast } from "../../utils/toasts";

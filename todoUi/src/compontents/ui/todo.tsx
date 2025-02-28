@@ -1,5 +1,5 @@
 import Loader from "../common/loader"
-import { axiosInstaceAuth } from "../../config/axios.config"
+import { axiosInstaceAuth } from "../../services/axios.config"
 import { ITodo } from "../../interfaces/todo"
 import Button from "../common/button"
 import Model from "../common/model"
@@ -10,7 +10,7 @@ import Input from "../common/input"
 import { errorToast, successToast } from "../../utils/toasts"
 import CheckIcon from "../../assets/icons/chechIcon"
 import { triggerBasicConfetti } from "../../utils/confettiEffect"
-import NoTodo from "./noTodo"
+import NoTaskFound from "../common/noTaskFound"
 
 interface IProps{
     numQuery:number;
@@ -136,7 +136,7 @@ const TodoList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
 
     if(todos == undefined || todos.length == 0)
     {
-        return <NoTodo/>
+        return <NoTaskFound/>
     }
 
     const todosList = todos.map((currTodo:ITodo)=>(

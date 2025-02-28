@@ -3,8 +3,9 @@ import HeroSection from "../compontents/ui/herosection"
 import TodoList from "../compontents/ui/todo"
 import TitleSection from "../compontents/common/titleSection"
 import { useQuery } from "@tanstack/react-query"
-import { axiosInstaceAuth } from "../config/axios.config"
-import NoTodo from "../compontents/ui/noTodo"
+import { axiosInstaceAuth } from "../services/axios.config"
+import NoTodoFound from "../compontents/common/noTaskFound"
+
 
 
 const HomePage = () => {
@@ -30,7 +31,7 @@ const HomePage = () => {
          <div>
                <HeroSection numQuery={numQuery} setNumQuery={setNumQuery} />
                <TitleSection>Recent Updated</TitleSection>
-               <NoTodo/>
+               <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoadingRecentUpdated} todos={todosRecentUpdated} />
                <TitleSection>Recent Added</TitleSection>
                <TodoList numQuery={numQuery} setNumQuery={setNumQuery} isLoading={isLoadingRecentAdded} todos={todosRecentAdded} />
          </div>
