@@ -6,9 +6,10 @@ import ToDosPage from '../Pages/toDos';
 import AuthLayout from '../Pages/Auth/authLayout';
 import SignInPage from '../Pages/Auth/signIn';
 import SignUpPage from '../Pages/Auth/signUp';
-import ProtectedRoute from '../compontents/auth';
+
 import ProfilePage from '../Pages/profile';
 import ErrorHandler from '../Pages/errorHandler';
+import ProtectedRoute from '../compontents/common/protectedRoute';
 
 const user = localStorage.getItem('user')
 
@@ -21,7 +22,7 @@ const router = createBrowserRouter(
             path='/'
             errorElement=<ErrorHandler/> 
             element=
-                <ProtectedRoute isAllowed={user} redirect='/auth/signin'>
+                <ProtectedRoute isAllowed={user} redirect='/auth/sign-in'>
                     <RootLayout/>
                 </ProtectedRoute>
             >
@@ -32,7 +33,7 @@ const router = createBrowserRouter(
 
             </Route>
 
-            <Route path='/auth' element=<Navigate to="/auth/signin"/> />
+            <Route path='/auth' element=<Navigate to="/auth/sign-in"/> />
 
             <Route 
             path='auth'
@@ -43,8 +44,8 @@ const router = createBrowserRouter(
                 </ProtectedRoute>
             >
 
-                <Route path='signin' element=<SignInPage/> />
-                <Route path='signup' element=<SignUpPage/> />
+                <Route path='sign-in' element=<SignInPage/> />
+                <Route path='sign-up' element=<SignUpPage/> />
 
             </Route>
 

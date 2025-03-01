@@ -20,7 +20,7 @@ interface IProps{
 }
 
 
-const TodoList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) => 
+const TasksList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) => 
 {
     //states
     const [isLoadingUpdate, setIsLoadingUpdate] = useState<boolean>(false)
@@ -197,4 +197,4 @@ const TodoList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
     )
 }
 
-export default TodoList
+export default TasksList

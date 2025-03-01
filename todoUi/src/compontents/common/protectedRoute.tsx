@@ -8,7 +8,7 @@ interface IProps{
 }
 
 const ProtectedRoute =({children, redirect , isAllowed}:IProps)=>{
-    if(isAllowed != undefined || isAllowed != null)
+    if(isAllowed)
         return children
     return <Navigate to={redirect}/>
 }

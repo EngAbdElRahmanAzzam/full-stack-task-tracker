@@ -1,3 +1,4 @@
+import { TSignInForm } from "../validation/signInSchema";
 import { TSignUpForm } from "../validation/signUpSchema";
 
 interface IFormInput{
@@ -6,16 +7,10 @@ interface IFormInput{
     placeholder:string;
 }
 
-
-export interface ISignInForm{
-    email:string;
-    password:string;
-}
-
 export interface ISignUpInput extends IFormInput{
     name:keyof TSignUpForm;
 }
 
 export interface ISignInInput extends IFormInput{
-    name:keyof ISignInForm;
+    name:keyof TSignInForm;
 }

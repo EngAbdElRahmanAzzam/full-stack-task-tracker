@@ -1,5 +1,5 @@
 import { useState } from "react"
-import TodoList from "../compontents/ui/todo"
+import TasksList from "../compontents/ui/taskList"
 import Pagination from "../compontents/ui/pagination"
 import SelectList from "../compontents/common/selectList"
 
@@ -11,7 +11,7 @@ const ToDosPage = () => {
 
     return (
       <>
-        <TodoList numQuery={numQuery} setNumQuery={setNumQuery}>
+        <TasksList numQuery={numQuery} setNumQuery={setNumQuery}>
             <SelectList value={pageSize} onChange={(e)=>{setPageSize(+e.target.value)}}>
               <option>5</option>
               <option>10</option>
@@ -20,7 +20,7 @@ const ToDosPage = () => {
               <option>50</option>
               <option>100</option>
             </SelectList>
-        </TodoList>
+        </TasksList>
         
         <Pagination />
       </>

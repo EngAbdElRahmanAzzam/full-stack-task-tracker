@@ -1,28 +1,6 @@
-// import {ReactNode, Ref, forwardRef , InputHTMLAttributes} from 'react'
-
-// interface IProps extends InputHTMLAttributes<HTMLInputElement>{
-//     children:ReactNode,
-//     className?:string;
-// }   
-
-
-// const Input = forwardRef(
-//     ({children, className,...rest}:IProps, ref:Ref<HTMLInputElement>)=>{
-//         const labelTxt = children as string
-//         return(
-//             <div className="flex flex-col">
-//                 <label className="text-sm font-semibold mb-0 cursor-pointer" htmlFor={labelTxt}>
-//                     {labelTxt}
-//                 </label>
-//                 <input id={labelTxt} ref={ref} placeholder={labelTxt} className={`w-80 py-1 mt-0 mb-2 bg-inherit border-b-2 focus:outline-none ${className}`} {...rest}/>
-//             </div>
-//         )
-//     }
-// )
-
-// export default Input
 import {ReactNode,InputHTMLAttributes , useState} from 'react'
 import { UseFormRegisterReturn , FieldError} from 'react-hook-form';
+import { colors, dimentions } from '../../data/styles';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement>{
     className?:string;
@@ -42,10 +20,8 @@ interface IErrorProps{
     error:FieldError | undefined;
 }
 
-
 const InputForm = ({id, className, register, error,children,...rest}:IInputProps)=>{
     
-
     return(
             <div className="flex flex-col">
 
@@ -53,7 +29,7 @@ const InputForm = ({id, className, register, error,children,...rest}:IInputProps
 
                 <input 
                 id={id} 
-                className={`w-80 py-1 mt-0 mb-2 bg-inherit border-b-2 focus:outline-none ${className}
+                className={`${dimentions.fieldFormW} py-1 mt-0 mb-2 bg-inherit border-b-2 focus:outline-none ${colors.mainBorderFocus} ${className}
                 ${(error)?"border-red-600":""}`}
                 {...register} 
                 {...rest}/>
@@ -78,7 +54,7 @@ export const InputFormPassword = ({id, className, register, error,children,...re
                     <input
                         id={id}
                         type={isShow ? "text" : "password"}
-                        className={`w-80 py-1 mt-0 mb-2 bg-inherit border-b-2 focus:outline-none ${className}
+                        className={`${dimentions.fieldFormW} py-1 mt-0 mb-2 bg-inherit border-b-2 focus:outline-none ${colors.mainBorderFocus} ${className}
                         ${(error)?"border-red-600":""}`}
                         {...register}
                         {...rest}
@@ -100,7 +76,7 @@ export const InputFormPassword = ({id, className, register, error,children,...re
 InputForm.Label = ({id,error,children}:ILabelProps)=> {
     const labelTxt = children as string
     return (
-        <label className={`text-sm font-semibold mb-0 cursor-pointer 
+        <label className={`text-sm ${colors.mainColorText} mb-0 cursor-pointer 
         ${(error)?"text-red-600":""}`} htmlFor={id}>
             {labelTxt}
         </label>
@@ -121,3 +97,27 @@ InputForm.Error = ({error}:IErrorProps)=> {
 }
 
 export default InputForm
+
+// import {ReactNode, Ref, forwardRef , InputHTMLAttributes} from 'react'
+
+// interface IProps extends InputHTMLAttributes<HTMLInputElement>{
+//     children:ReactNode,
+//     className?:string;
+// }   
+
+
+// const Input = forwardRef(
+//     ({children, className,...rest}:IProps, ref:Ref<HTMLInputElement>)=>{
+//         const labelTxt = children as string
+//         return(
+//             <div className="flex flex-col">
+//                 <label className="text-sm font-semibold mb-0 cursor-pointer" htmlFor={labelTxt}>
+//                     {labelTxt}
+//                 </label>
+//                 <input id={labelTxt} ref={ref} placeholder={labelTxt} className={`w-80 py-1 mt-0 mb-2 bg-inherit border-b-2 focus:outline-none ${className}`} {...rest}/>
+//             </div>
+//         )
+//     }
+// )
+
+// export default Input

@@ -11,6 +11,7 @@ import { AxiosError } from "axios"
 import { IErrorRespone } from "../interfaces/api"
 
 type TMsgWarning = "Account" | "Tasks" | ""
+
 const ProfilePage = () => {
     const user = JSON.parse(localStorage?.getItem('user') || "")
     //states 
@@ -93,6 +94,8 @@ const ProfilePage = () => {
                     <Button className="bg-neutral-700 text-white ms-2 hover:bg-neutral-300 my-2" onClick={()=>onClickOpenModelBtn("Tasks")}>Reset All Tasks</Button>
                 </div>
             </div>
+
+            {/*general models for delete account and delete all tasks */}
             <Model isOpenModel={isOpenModel} closeModel={toggleModel} title={msgWarning+"Deleting"}>
                 <p className="mb-2">
                     Are you sure to delete {msgWarning} to do?

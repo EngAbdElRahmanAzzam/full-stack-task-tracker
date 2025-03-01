@@ -69,11 +69,11 @@ const SignUpPage = () => {
 
       <Fragment key={index}>
         <Input 
-        id={input.name}
-        type={input.type}
-        placeholder={input.placeholder} 
-        register={register(input.name)}
-        error={errors[input.name]}
+          id={input.name}
+          type={input.type}
+          placeholder={input.placeholder} 
+          register={register(input.name)}
+          error={errors[input.name]}
         >
           {input.label}
         </Input>
@@ -94,19 +94,19 @@ const SignUpPage = () => {
                   {signUpFormList} 
 
                   <InputFormPassword
-                  id="password"
-                  placeholder="Enter Password  must 8-80" 
-                  register={register("password")}
-                  error={errors.password}
+                    id="password"
+                    placeholder="Enter Password  must 8-80" 
+                    register={register("password")}
+                    error={errors.password}
                   >
                     Password
                   </InputFormPassword>
 
                   <InputFormPassword
-                  id="repeatPassword"
-                  placeholder="Confirm Password" 
-                  register={register("re_password")}
-                  error={errors.re_password}
+                    id="repeatPassword"
+                    placeholder="Confirm Password" 
+                    register={register("re_password")}
+                    error={errors.re_password}
                   >
                     Repeat Password
                   </InputFormPassword>
