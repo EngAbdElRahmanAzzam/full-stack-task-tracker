@@ -1,41 +1,30 @@
 import { useForm , SubmitHandler } from "react-hook-form"
 import Input, { InputFormPassword } from "../../compontents/authUi/input"
 import { TSignUpForm, signUpSchema } from "../../validation/signUpSchema"
-import { colors, dimentions, toastsStyle } from "../../data/styles"
 import { SIGNUP_FORM } from "../../data/signUp"
 import { axiosInstace } from "../../services/axios.config"
-import { toast } from "react-hot-toast"
-import  Loader  from "../../compontents/common/loader"
 import { AxiosError } from "axios"
 import { IErrorRespone } from "../../interfaces/api"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Fragment } from "react/jsx-runtime"
 import TitleAuth from "../../compontents/authUi/titleAuth"
+import FormAuth from "../../compontents/authUi/formAuth"
+import FormBtn from "../../compontents/authUi/button"
+import { routes } from "../../services"
+import { errorToast, successToast } from "../../utils/toasts"
 
 
 
 
 const SignUpPage = () => {
-const {register, handleSubmit, formState:{ errors, isSubmitting } }= useForm<TSignUpForm>({resolver:zodResolver(signUpSchema)})
+const {register, handleSubmit, reset,formState:{ errors, isSubmitting } }= useForm<TSignUpForm>({resolver:zodResolver(signUpSchema)})
 
 // handlers
-const onSubmit:SubmitHandler<TSignUpForm> =async (data)=>  {
-  const requestBody = {
-    firstName:data.firstName,
-    lastName: data.lastName,
-    email: data.email,
-    mobile:data.phone,
-    password: data.password
-  } 
+const onSubmit:SubmitHandler<TSignUpForm> =async (formData)=>  {
+  const { re_password, ...requestData } = formData;
   try{
-    const {data:resData} = await axiosInstace.post('users/sign-up', requestBody)
-      toast.success("Success Registering and Wellcome to our platform",
-          {
-            position:"top-right",
-            duration:1000,
-            style:toastsStyle.signUpStyle.style
-          }
-      )
+    const {data:resData} = await axiosInstace.post(routes.signUp, requestData)
+      successToast("Success Registering and Wellcome to our platform")
       localStorage.setItem('user', JSON.stringify(resData.data))
       location.replace('/')
 
@@ -45,17 +34,11 @@ const onSubmit:SubmitHandler<TSignUpForm> =async (data)=>  {
     let errorMsg = error.response?.data.message
     if(!errorMsg)
     {
-      errorMsg = "Bad request"
+      errorMsg = "Uncatched Error"
     }
-    toast.error(`${error.response?.data.message} !!! and try again`,
-          {
-            position:"top-right",
-            duration:4000,
-            style:toastsStyle.signUpStyle.style
-          }
-      )
+    errorToast(`${errorMsg}!!! and try again`)
   }
-
+  reset()
 }
 
 //render
@@ -76,17 +59,15 @@ const signUpFormList = SIGNUP_FORM.map((input, index)=>(
 ))
 
 return (
-        <div>
-          <div className="sm:min-h-[92vh] pt-10 mx-auto shadow-2xl md:w-4/6 md:min-h-fit md:my-10">
-
+        <>
             {/* title at sign up form -> at imge and form */}
             <TitleAuth>
-              Wellcome to Progress Tracker Platform
+              Wellcome to Taskitify Progress Tracker Platform
             </TitleAuth>
 
             <div className="flex flex-col lg:flex-row items-center ">
 
-                <form  onSubmit={handleSubmit(onSubmit)} className="w-1/2  text-gray-600 p-5 lg:my-20 flex flex-col gap-2 justify-center items-center">
+              <FormAuth onSubmit={handleSubmit(onSubmit)}>
                   {signUpFormList} 
                   <InputFormPassword
                     id="password"
@@ -106,20 +87,16 @@ return (
                   Repeat Password
                   </InputFormPassword>
 
-                  <button 
-                    disabled={isSubmitting} 
-                    className={`${colors.mainColorBg} ${dimentions.fieldFormW} text-white py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}
-                  >
-                    {isSubmitting?<Loader />:"Sign up"}
-                  </button>
-                </form>
+                  <FormBtn isSubmitting={isSubmitting}>
+                  Sign Up
+                  </FormBtn>
+                </FormAuth>
 
-                <div>
+                <div className="order-first md:order-last">
                   <img className="block mx-auto" src="/signup.jpg"/>
                 </div>
             </div>
-          </div>
-        </div> 
+        </> 
   )
 
 }

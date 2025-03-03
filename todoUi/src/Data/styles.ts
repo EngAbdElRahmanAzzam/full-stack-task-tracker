@@ -19,19 +19,17 @@ export const dimentions = {
 }
 
 export const toastsStyle = {
-  signInStyle:{
-    backgroundColor:"#4f46e5",
+successToast:{
+    backgroundColor:"#86efac",
     color:"#ffffff",
     padding:"5px 10px",
     width:"fit-content"
   },
-  signUpStyle:{
-    style:{
+  errorToast:{
       backgroundColor:"#fca5a5",
-      color:"#f1f5f9",
+      color:"black",
       padding:"5px 10px",
       width:"fit-content"
-    }
   }
 }
 

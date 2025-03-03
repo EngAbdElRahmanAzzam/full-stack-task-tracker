@@ -5,7 +5,14 @@ const AuthLayout = () => {
     return (
         <> 
             <AuthHeader />
-            <Outlet />   
+            
+            <div>
+                <div className="min-h-[92vh] pt-10 mx-auto shadow-2xl md:w-4/6 md:min-h-fit md:my-10">
+                    <Outlet />  
+                </div>
+
+            </div> 
+
         </>
     )
   }

@@ -23,7 +23,7 @@ export const SIGNUP_FORM:ISignUpInput[] = [
     }
     ,
     {
-        name:"phone",
+        name:"mobile",
         label:"phone",
         type:"tel",
         placeholder:"Enter Phone  12 digit",
