@@ -76,7 +76,7 @@ export const InputFormPassword = ({id, className, register, error,children,...re
 InputForm.Label = ({id,error,children}:ILabelProps)=> {
     const labelTxt = children as string
     return (
-        <label className={`text-sm ${colors.mainColorText} mb-0 cursor-pointer 
+        <label className={`text-2xl font-extralight ${colors.mainColorText} mb-0 cursor-pointer 
         ${(error)?"text-red-600":""}`} htmlFor={id}>
             {labelTxt}
         </label>

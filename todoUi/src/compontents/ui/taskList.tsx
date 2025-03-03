@@ -6,7 +6,7 @@ import Model from "../common/model"
 import {useState , ChangeEvent} from 'react'
 import { AxiosError } from "axios"
 import { IErrorRespone } from "../../interfaces/api"
-import Input from "../common/input"
+import Input from "../authUi/input"
 import { errorToast, successToast } from "../../utils/toasts"
 import CheckIcon from "../../assets/icons/chechIcon"
 import { triggerBasicConfetti } from "../../utils/confettiEffect"
@@ -45,31 +45,34 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
 
 
     const onUpdateTodoStatus = async (todo:ITodo)=>{
-        setSelectedTodo(todo)
-        setLoadingUpdateStatus(true)
-        try
+        if(!todo.status)
         {
-            await axiosInstaceAuth.patch(`/todos/${selectedTodo?._id}`, {
-                status:true
-            })
-            triggerBasicConfetti();
-            successToast("Updated sucessfully")
-            setNumQuery(numQuery+1)
-
-        }catch(e)
-        {   
-            const error = e as AxiosError<IErrorRespone>
-            let msg:string = ""
-            if(error.response?.data == undefined)
+            setSelectedTodo(todo)
+            setLoadingUpdateStatus(true)
+            try
             {
-                msg = error.response?.statusText as string
+                await axiosInstaceAuth.patch(`/todos/${selectedTodo?._id}`, {
+                    status:true
+                })
+                triggerBasicConfetti();
+                successToast("Updated sucessfully")
+                setNumQuery(numQuery+1)
+
+            }catch(e)
+            {   
+                const error = e as AxiosError<IErrorRespone>
+                let msg:string = ""
+                if(error.response?.data == undefined)
+                {
+                    msg = error.response?.statusText as string
+                }
+                else{
+                    msg = error.response?.data.message as string 
+                }
+                errorToast(`Failed updating ${msg}`)
+            }finally{
+                setLoadingUpdateStatus(false)
             }
-            else{
-                msg = error.response?.data.message as string 
-            }
-            errorToast(`Failed updating ${msg}`)
-        }finally{
-            setLoadingUpdateStatus(false)
         }
     }
 
@@ -132,7 +135,7 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
 
     //renders
     if(isLoading)
-        return <Loader />
+        return <Loader/>
 
     if(todos == undefined || todos.length == 0)
     {
@@ -157,7 +160,7 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
                         }   
                         <p className="cursor-pointer" onClick={toggleUpdateModel}>{currTodo.title}</p>
                     </div>
-                    <div className={`${(currTodo.status)?"text-green-400":""}`}>
+                    <div>
                         <Button className="bg-indigo-600 hover:bg-indigo-300 my-2" onClick={toggleUpdateModel}>Update</Button>
                         <Button className="bg-neutral-700 text-white ms-2 hover:bg-neutral-300 my-2" onClick={toggleDeleteModel}>Remove</Button>
                     </div>

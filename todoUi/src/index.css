@@ -28,13 +28,15 @@
 ::-webkit-scrollbar-thumb:hover{
   background-color: var(--hover-color);
 }
-
-.h-signup{
-  height: 70vh;
+.smooth{
+  transition: all 50s ease-in-out;
 }
 
-.h-signin{
-
+button,a,.active,.smooth{
+  transition: all .2s ease-in-out;
+}
+button:active, a:active,.active:active{
+  scale: .9;
 }
 
 a[class="active"] {

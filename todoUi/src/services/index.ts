@@ -1,6 +1,4 @@
-export const routes = {
-    signIn:"sign-in",
-    signUp:"sign-up",
-    home:"/"
-    profile:"/"
+export const routes={
+    signIn:'/users/sign-in',
+    signUp:''
 }

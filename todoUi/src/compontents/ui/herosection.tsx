@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react"
-import Input from "../common/input"
+import Input from "../authUi/input"
 import Model from "../common/model"
 import Button from "../common/button"
 import Loader from "../common/loader"
@@ -10,7 +10,7 @@ import { AxiosError } from "axios"
 import { IErrorRespone } from "../../interfaces/api"
 import { stringValidation } from "../../utils/validation"
 import {faker} from '@faker-js/faker'
-import Error from "../common/error"
+import Error from "../authUi/error"
 import SelectList from "../common/selectList"
 
 

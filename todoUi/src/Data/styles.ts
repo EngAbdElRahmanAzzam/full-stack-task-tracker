@@ -7,7 +7,8 @@ export const styles = {
 export const colors = {
     mainColorBg : "bg-indigo-600",
     mainColorText : "text-indigo-600",
-    mainBorderFocus :"focus:border-indigo-600"
+    mainBorderFocus :"focus:border-indigo-600",
+    color2Text:"text-white"
 
 }
 
@@ -23,7 +24,14 @@ export const toastsStyle = {
     color:"#ffffff",
     padding:"5px 10px",
     width:"fit-content"
+  },
+  signUpStyle:{
+    style:{
+      backgroundColor:"#fca5a5",
+      color:"#f1f5f9",
+      padding:"5px 10px",
+      width:"fit-content"
+    }
   }
-
 }
 

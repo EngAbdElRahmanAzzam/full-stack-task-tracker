@@ -1,4 +1,4 @@
-import Input, { InputFormPassword } from "../../compontents/common/input"
+import Input, { InputFormPassword } from "../../compontents/authUi/input"
 import  Loader  from "../../compontents/common/loader";
 import { useForm , SubmitHandler}from "react-hook-form";
 import { axiosInstace } from "../../services/axios.config";
@@ -8,6 +8,10 @@ import { errorToast, successToast } from "../../utils/toasts";
 import { TSignInForm, signInSchema } from "../../validation/signInSchema";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { colors, dimentions, toastsStyle } from "../../data/styles";
+import { routes } from "../../services"; 
+import TitleAuth from "../../compontents/authUi/titleAuth";
+import FormAuth from "../../compontents/authUi/formAuth";
+
 
 
 const SignInPage = () => {
@@ -17,7 +21,7 @@ const SignInPage = () => {
     //handlers
     const onSubmit:SubmitHandler<TSignInForm> = async (dataForm)=>{
       try{
-            const {data} = await axiosInstace.post("/users/sign-in", dataForm)
+            const {data} = await axiosInstace.post(routes.signIn, dataForm)
             if(data.status == "success")
             {
               successToast("Success Registering and Wellcome to our platform",toastsStyle.signInStyle)
@@ -27,7 +31,7 @@ const SignInPage = () => {
         }catch(e){
             const error = e as AxiosError<IErrorRespone>
             let msg:string = ""
-            if(!error.response?.data.message != undefined)
+            if(!error.response?.data.message)
             {
                 msg = error.response?.data.message as string 
             }
@@ -39,20 +43,18 @@ const SignInPage = () => {
     return (
       <div>
 
-          <div className="md:w-4/6 my-12 pt-14  mx-auto shadow-2xl">
-
-              {/* title at sign in form -> at imge and form */}
-              <h2 className={`font-semibold text-2xl ${colors.mainColorText} ${dimentions.containerPMd} text-center`}>
-                    Wellcome back to Progress Tasks Platform
-              </h2>
+          <div className="min-h-[92vh] pt-10 mx-auto shadow-2xl md:w-4/6 md:min-h-fit md:my-10">
+              <TitleAuth>
+                Wellcome back to Progress Tasks Platform
+              </TitleAuth>
 
               <div className="flex flex-col lg:flex-row items-center ">
 
-                <div className="w-1/2">
+                <div>
                     <img className="block mx-auto" src="/signin.jpg"/>
                 </div>
 
-                <form  onSubmit={handleSubmit(onSubmit)} className="h-signin w-1/2  text-gray-600 p-5 lg:my-20 flex flex-col gap-2 justify-center items-center">
+                <FormAuth onSubmit={handleSubmit(onSubmit)}>
 
                     <Input 
                       id="email"
@@ -65,19 +67,22 @@ const SignInPage = () => {
                     </Input>
 
                     <InputFormPassword
-                      id="repeatPassword"
-                      placeholder="Confirm Password" 
+                      id="password"
+                      placeholder="Password" 
                       register={register("password")}
                       error={errors.password}
                     >
                       Password
                     </InputFormPassword>
 
-                    <button disabled={isSubmitting} className={`${colors.mainColorBg} ${dimentions.fieldFormW} text-white py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}>
+                    <button 
+                      disabled={isSubmitting} 
+                      className={`${colors.mainColorBg} ${dimentions.fieldFormW} ${colors.color2Text} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}
+                    >
                       {isSubmitting?<Loader />:"Sign in"}
                     </button>
 
-                </form>
+                  </FormAuth>
               </div>
           </div>
 

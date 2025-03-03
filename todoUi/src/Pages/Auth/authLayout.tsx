@@ -1,5 +1,5 @@
 import {Outlet} from 'react-router-dom'
-import AuthHeader from '../../compontents/ui/authHeader'
+import AuthHeader from '../../compontents/authUi/authNavbar'
 
 const AuthLayout = () => {
     return (
