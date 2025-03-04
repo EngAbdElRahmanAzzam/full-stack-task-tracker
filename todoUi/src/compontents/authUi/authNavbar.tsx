@@ -1,9 +1,9 @@
-import { colors } from "../../data/styles"
+import { colors, dimentions } from "../../data/styles"
 
 const AuthHeader = () => {
   return (
-        <header className={`h-[8vh] ${colors.mainColorBg} text-teal-650 text-lg px-5 flex items-center`}>
-            <img className='w-36' src='/logo.png' />
+        <header className={`${dimentions.navbarHeigth} ${colors.mainColorBg} px-5 flex items-center`}>
+            <img className={dimentions.logoWidth} src='/logo.png' />
         </header>
   )
 }

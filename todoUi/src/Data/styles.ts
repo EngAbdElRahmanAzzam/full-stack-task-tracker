@@ -13,6 +13,8 @@ export const colors = {
 }
 
 export const dimentions = {
+    logoWidth:"w-36",
+    navbarHeigth:"h-[8vh]",
     fieldFormW:"w-80",
     containerPMd :"p-5",
     containerSmPMd :"sm:p-5"

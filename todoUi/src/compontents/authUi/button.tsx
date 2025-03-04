@@ -11,7 +11,7 @@ const FormBtn = ({children, isSubmitting}:IProps) => {
   return (
     <button 
     disabled={isSubmitting} 
-    className={`${colors.mainColorBg} ${dimentions.fieldFormW} text-white py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}
+    className={`${colors.mainColorBg} ${dimentions.fieldFormW} ${colors.color2Text} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}
     >
     {isSubmitting?<Loader />:children}
     </button>

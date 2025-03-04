@@ -10,6 +10,7 @@ import { routes } from "../../services";
 import TitleAuth from "../../compontents/authUi/titleAuth";
 import Form from "../../compontents/authUi/formAuth";
 import FormBtn from "../../compontents/authUi/button";
+import { storeCredentials } from "../../utils/localStorage";
 
 
 
@@ -20,13 +21,10 @@ const SignInPage = () => {
     //handlers
     const onSubmit:SubmitHandler<TSignInForm> = async (dataForm)=>{
       try{
-            const {data} = await axiosInstace.post(routes.signIn, dataForm)
-            if(data.status == "success")
-            {
-              successToast("Success Logging in and Wellcome back")
-              localStorage.setItem('user', JSON.stringify(data.data))
-              location.replace('/')
-            }
+          const {data} = await axiosInstace.post(routes.signIn, dataForm)
+            successToast("Success Logging in and Wellcome back")
+            storeCredentials(data)
+            location.replace('/')
         }catch(e){
             const error = e as AxiosError<IErrorRespone>
             let errorMsg = error.response?.data.message
@@ -34,7 +32,7 @@ const SignInPage = () => {
             {
               errorMsg = "Bad request"
             }
-            errorToast(`${errorMsg}!!! and try again`)
+            errorToast(`${errorMsg}! and try again`)
         }
         reset()
     }

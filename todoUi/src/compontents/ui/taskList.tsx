@@ -1,6 +1,6 @@
 import Loader from "../common/loader"
 import { axiosInstaceAuth } from "../../services/axios.config"
-import { ITodo } from "../../interfaces/todo"
+import { ITodo } from "../../interfaces/models"
 import Button from "../common/button"
 import Model from "../common/model"
 import {useState , ChangeEvent} from 'react'

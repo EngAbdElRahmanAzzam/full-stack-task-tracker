@@ -3,14 +3,14 @@ import Input from "../authUi/input"
 import Model from "../common/model"
 import Button from "../common/button"
 import Loader from "../common/loader"
-import { ITodo } from "../../interfaces/todo"
+import { ITodo } from "../../interfaces/models"
 import { axiosInstaceAuth } from "../../services/axios.config"
 import { errorToast, successToast } from "../../utils/toasts"
 import { AxiosError } from "axios"
 import { IErrorRespone } from "../../interfaces/api"
 import { stringValidation } from "../../utils/validation"
 import {faker} from '@faker-js/faker'
-import Error from "../authUi/error"
+import Error from "../common/error"
 import SelectList from "../common/selectList"
 
 

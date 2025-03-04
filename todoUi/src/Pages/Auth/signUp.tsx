@@ -12,53 +12,52 @@ import FormAuth from "../../compontents/authUi/formAuth"
 import FormBtn from "../../compontents/authUi/button"
 import { routes } from "../../services"
 import { errorToast, successToast } from "../../utils/toasts"
-
-
+import { storeCredentials } from "../../utils/localStorage"
 
 
 const SignUpPage = () => {
-const {register, handleSubmit, reset,formState:{ errors, isSubmitting } }= useForm<TSignUpForm>({resolver:zodResolver(signUpSchema)})
+  const {register, handleSubmit, reset,formState:{ errors, isSubmitting } }= useForm<TSignUpForm>({resolver:zodResolver(signUpSchema)})
 
-// handlers
-const onSubmit:SubmitHandler<TSignUpForm> =async (formData)=>  {
-  const { re_password, ...requestData } = formData;
-  try{
-    const {data:resData} = await axiosInstace.post(routes.signUp, requestData)
-      successToast("Success Registering and Wellcome to our platform")
-      localStorage.setItem('user', JSON.stringify(resData.data))
-      location.replace('/')
+  // handlers
+  const onSubmit:SubmitHandler<TSignUpForm> =async (formData)=>  {
+    const { re_password, ...requestData } = formData;
+    try{
+      const {data} = await axiosInstace.post(routes.signUp, requestData)
+        successToast("Success Registering and Wellcome to our platform")
+        storeCredentials(data)
+        location.replace('/')
 
-  }catch(e)
-  {
-    const error = e as AxiosError<IErrorRespone>
-    let errorMsg = error.response?.data.message
-    if(!errorMsg)
+    }catch(e)
     {
-      errorMsg = "Uncatched Error"
+      const error = e as AxiosError<IErrorRespone>
+      let errorMsg = error.response?.data.message
+      if(!errorMsg)
+      {
+        errorMsg = "Uncatched Error"
+      }
+      errorToast(`${errorMsg}!!! and try again`)
     }
-    errorToast(`${errorMsg}!!! and try again`)
+    reset()
   }
-  reset()
-}
 
-//render
-const signUpFormList = SIGNUP_FORM.map((input, index)=>(
+  //render
+  const signUpFormList = SIGNUP_FORM.map((input, index)=>(
 
-  <Fragment key={index}>
-    <Input 
-      id={input.name}
-      type={input.type}
-      placeholder={input.placeholder} 
-      register={register(input.name)}
-      error={errors[input.name]}
-    >
-      {input.label}
-    </Input>
-  </Fragment>
+    <Fragment key={index}>
+      <Input 
+        id={input.name}
+        type={input.type}
+        placeholder={input.placeholder} 
+        register={register(input.name)}
+        error={errors[input.name]}
+      >
+        {input.label}
+      </Input>
+    </Fragment>
 
-))
+  ))
 
-return (
+  return(
         <>
             {/* title at sign up form -> at imge and form */}
             <TitleAuth>
