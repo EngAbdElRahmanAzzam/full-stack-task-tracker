@@ -4,7 +4,7 @@ import Footer from '../compontents/ui/footer'
 
 const RootLayout = () => {
     return (
-        <div className='flex flex-col min-h-full'> 
+        <div className='flex flex-col min-h-screen'> 
             <Navbar />
             <Outlet />
             <Footer />

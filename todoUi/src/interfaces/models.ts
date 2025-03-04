@@ -1,4 +1,4 @@
-export interface ITodo{
+export interface ITaskModel{
     _id?:number;
     title:string;
     description:string;

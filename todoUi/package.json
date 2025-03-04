@@ -15,14 +15,11 @@
     "@tanstack/react-query": "^5.61.3",
     "axios": "^1.7.7",
     "canvas-confetti": "^1.9.3",
-    "localforage": "^1.10.0",
-    "match-sorter": "^8.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.2",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.28.0",
-    "sort-by": "^1.2.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {

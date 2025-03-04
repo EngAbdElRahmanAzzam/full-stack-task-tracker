@@ -14,7 +14,7 @@ if(isLoggedIn()){
                 baseURL:`${hostServer}/api/v1`,
                 timeout,
                 headers:{
-                    Authorization: 'getToken()'
+                    Authorization: getToken()
                 }
             }
         )

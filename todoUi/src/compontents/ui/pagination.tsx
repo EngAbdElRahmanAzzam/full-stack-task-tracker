@@ -1,72 +1,79 @@
-
+import { ReactNode, useState } from "react"
+import LeftArrow from "../../assets/icons/liftArrow"
+import RightArrow from "../../assets/icons/rightArrow"
+import { colors } from "../../data/styles"
 
 const Pagination = () => {
-
+    const last = 10;
      //states 
-    
+    const [page, setPage] = useState<number>(7)
+
+    //handlers 
+    const nextPageHandler = () => {
+        if(page+2 < last)
+        setPage((val) => val+1)
+    }
+
+    const prevPageHandler = () => {
+        if(page-2 > 1)
+        setPage((val) => val-1)
+    }
+
+    //renders 
+    const pageList = Array.from({length:5}, (_,index) => <Pagination.PageItem key={index} page={page-2+index} className={(index==2)?`${colors.mainColorBg} text-white`:""} /> )
+
     return (
-        <ol className="flex justify-center gap-1 text-xs font-medium">
-        <li>
-            <a
-            href="#"
-            className="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
-            >
-
-            <span className="sr-only">Prev Page</span>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-3"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-            >
-                <path
-                fillRule="evenodd"
-                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clipRule="evenodd"
-                />
-            </svg>
+        <ol className="flex justify-center items-center gap-1 text-xs font-medium">
             
-            </a>
-        </li>
+            <Pagination.BtnItem handler={prevPageHandler} disableCondition>
+                <LeftArrow/>
+            </Pagination.BtnItem>
 
-        <li>
-            <a
-            href="#"
-            className="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
-            >
-            1
-            </a>
-        </li>
+            {( page > 3)?
+                <>
+                    <Pagination.PageItem page={1} /> 
+                    <li className="text-center leading-8">. . .</li>
+                 </>:""
+            }
 
-        <li className="block size-8 rounded border-blue-600 bg-blue-600 text-center leading-8 text-white">
-            2
-        </li>
-
-
-        <li>
-            <a
-            href="#"
-            className="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
-            >
-
-            <span className="sr-only">Next Page</span>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-3"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-            >
-                <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-                />
-            </svg>
-
-            </a>
-        </li>
+            {pageList}
+            
+            <Pagination.BtnItem handler={nextPageHandler} disableCondition>
+                <RightArrow/>
+            </Pagination.BtnItem>
+            
         </ol>
     )
-  }
-  
+}
+
+// 
+Pagination.PageItem = ({page, className}:{page:number;className?:string}) => {
+
+    return (
+        <li className={`block size-8 ${colors.mainColorText} ${colors.mainBorder} rounded text-center leading-8 ${className}`}>
+                {page}
+        </li>
+    )
+}
+interface IBtnItemProps{
+    disableCondition:boolean;
+    handler : ()=>void
+    children:ReactNode
+}
+
+Pagination.BtnItem = ({disableCondition, handler, children}:IBtnItemProps)=> {
+
+    return(
+        <li>
+            <button
+                className={`${colors.mainColorText} disabled:cursor-not-allowed`}
+                onClick={handler}
+                disabled={(disableCondition)?false:true}
+                // disabled={(page-2 > 1)?false:truepage+2 < last}
+            >
+                {children}
+            </button>
+        </li>
+    )
+}
   export default Pagination

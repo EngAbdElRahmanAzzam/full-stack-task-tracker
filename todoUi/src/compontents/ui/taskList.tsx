@@ -1,6 +1,6 @@
 import Loader from "../common/loader"
 import { axiosInstaceAuth } from "../../services/axios.config"
-import { ITodo } from "../../interfaces/models"
+import { ITaskModel } from "../../interfaces/models"
 import Button from "../common/button"
 import Model from "../common/model"
 import {useState , ChangeEvent} from 'react'
@@ -16,11 +16,11 @@ interface IProps{
     numQuery:number;
     setNumQuery:(val:number)=>void;
     isLoading:boolean
-    todos:ITodo[]
+    tasks:ITaskModel[]
 }
 
 
-const TasksList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) => 
+const TasksList = ({numQuery, setNumQuery,isLoading ,tasks}:IProps) => 
 {
     //states
     const [isLoadingUpdate, setIsLoadingUpdate] = useState<boolean>(false)
@@ -28,7 +28,7 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
     const [isLoadingDelete, setIsLoadingDelete] = useState<boolean>(false)
     const [isOpenUpdateModel, setIsOpenUpdateModel] = useState<boolean>(false)
     const [isOpenDeleteModel, setIsOpenDeleteModel] = useState<boolean>(false)
-    const [selectedTodo, setSelectedTodo] = useState<ITodo>({
+    const [selectedTodo, setSelectedTodo] = useState<ITaskModel>({
         title:"",
         description:"",
         status:false
@@ -44,7 +44,7 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
     }
 
 
-    const onUpdateTodoStatus = async (todo:ITodo)=>{
+    const onUpdateTodoStatus = async (todo:ITaskModel)=>{
         if(!todo.status)
         {
             setSelectedTodo(todo)
@@ -137,12 +137,12 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,todos}:IProps) =>
     if(isLoading)
         return <Loader/>
 
-    if(todos == undefined || todos.length == 0)
+    if(tasks == undefined || tasks.length == 0)
     {
         return <NoTaskFound/>
     }
 
-    const todosList = todos.map((currTodo:ITodo)=>(
+    const todosList = tasks.map((currTodo:ITaskModel)=>(
             <tr 
             className="odd:bg-white even:bg-gray-100" 
             onClick={()=>setSelectedTodo(currTodo)}

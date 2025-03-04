@@ -2,7 +2,7 @@ import { useState } from "react"
 import HeroSection from "../compontents/ui/herosection"
 import TitleSection from "../compontents/common/titleSection"
 import { useQuery } from "@tanstack/react-query"
-import { fetchRecentAddedTodos, fetchRecentUpdatedTodos } from "../services/task"
+import { fetchRecentAddedTasks, fetchRecentUpdatedTasks } from "../services/task"
 import TasksList from "../compontents/ui/taskList"
 
 
@@ -11,14 +11,14 @@ const HomePage = () => {
      //states 
      const [numQuery, setNumQuery] = useState<number>(0)
 
-     const { isLoading: isLoadingRecentAdded, data: todosRecentAdded } = useQuery({
+     const { isLoading: isLoadingRecentAdded, data: recentAdded } = useQuery({
           queryKey: ['tasksRecentAdded', `${numQuery}`],
-          queryFn: fetchRecentAddedTodos
+          queryFn: fetchRecentAddedTasks
       });
 
-     const {isLoading:isLoadingRecentUpdated, data:todosRecentUpdated} = useQuery({
+     const {isLoading:isLoadingRecentUpdated, data:recentUpdated} = useQuery({
           queryKey:['tasksRecentUpdated', `${numQuery}`],
-          queryFn:fetchRecentUpdatedTodos
+          queryFn:fetchRecentUpdatedTasks
      })
 
     return (
@@ -33,7 +33,7 @@ const HomePage = () => {
                               numQuery={numQuery} 
                               setNumQuery={setNumQuery} 
                               isLoading={isLoadingRecentUpdated} 
-                              todos={todosRecentUpdated} 
+                              tasks={recentUpdated} 
                          />
                     </section>
                     
@@ -45,7 +45,7 @@ const HomePage = () => {
                               numQuery={numQuery} 
                               setNumQuery={setNumQuery} 
                               isLoading={isLoadingRecentAdded} 
-                              todos={todosRecentAdded}
+                              tasks={recentAdded}
                          />
                     </section>
 

@@ -11,6 +11,7 @@ import ErrorHandler from '../Pages/errorHandler';
 import ProtectedRoute from '../compontents/common/protectedRoute';
 import { routes } from '.';
 import { isLoggedIn } from '../authorize/isLoggedIn';
+import Pagin from '../Pages/pagin';
 
 
 const router = createBrowserRouter(
@@ -28,8 +29,9 @@ const router = createBrowserRouter(
                     </ProtectedRoute>
                 }
             >
-
-                <Route index element={<HomePage/>} />
+                
+                {/* fffff */}
+                <Route index element={<Pagin/>} />  
                 <Route path={routes.tasks} element={<TasksPage/>} />
                 <Route path={routes.profile} element={<ProfilePage/>} />
 
@@ -56,6 +58,14 @@ const router = createBrowserRouter(
             <Route path='*'  element={<NotFoundPage/>} />
         </>
     )
+    ,
+    {
+        future: {
+          v7_normalizeFormMethod: true,
+          v7_relativeSplatPath: true,
+          v7_skipActionErrorRevalidation: true,
+        },
+      }
 )
 
 export default router;

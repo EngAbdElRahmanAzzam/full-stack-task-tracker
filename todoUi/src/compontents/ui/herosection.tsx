@@ -3,7 +3,7 @@ import Input from "../authUi/input"
 import Model from "../common/model"
 import Button from "../common/button"
 import Loader from "../common/loader"
-import { ITodo } from "../../interfaces/models"
+import { ITaskModel } from "../../interfaces/models"
 import { axiosInstaceAuth } from "../../services/axios.config"
 import { errorToast, successToast } from "../../utils/toasts"
 import { AxiosError } from "axios"
@@ -24,7 +24,7 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
     const [numTodo, setNumTodo] = useState<number>(5)
     const [isOpenModel, setIsOpenModel] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [todoForm, setTodoForm] = useState<ITodo>({
+    const [todoForm, setTodoForm] = useState<ITaskModel>({
         title:"",
         description:"",
         status : false
