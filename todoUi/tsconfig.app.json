@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "src/interfaces/auth.ts"]
+  "include": ["src", "src/interfaces/uiAuth.ts"]
 }

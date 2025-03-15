@@ -55,7 +55,7 @@ import { clearStorage } from '../../utils/localStorage';
                 <img className={dimentions.logoWidth} src="/logo.png" />
                 
                 <ul 
-                    className={`w-full text-2xl border-black overflow-hidden absolute top-full left-0 flex flex-col items-center gap-2 bg-indigo-600 shadow-2xl shadow-black transition-[max-height]
+                    className={`w-full text-2xl border-black overflow-hidden absolute z-50 top-full left-0 flex flex-col items-center gap-2 bg-indigo-600 shadow-2xl shadow-black transition-[max-height]
                     md:w-auto md:static md:overflow-visible md:flex-row md:text-2xl
                     ${isShowNav ? "max-h-screen border-t-2" : "max-h-0"}`}
                     onClick={isMobile ? toggleNavHandler : () => {}}

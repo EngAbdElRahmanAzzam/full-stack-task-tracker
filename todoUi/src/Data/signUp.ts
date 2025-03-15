@@ -1,4 +1,4 @@
-import { ISignUpInput } from "../interfaces/auth";
+import { ISignUpInput } from "../interfaces/uiAuth";
 
 export const SIGNUP_FORM:ISignUpInput[] = [
     {

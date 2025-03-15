@@ -11,7 +11,6 @@ import ErrorHandler from '../Pages/errorHandler';
 import ProtectedRoute from '../compontents/common/protectedRoute';
 import { routes } from '.';
 import { isLoggedIn } from '../authorize/isLoggedIn';
-import Pagin from '../Pages/pagin';
 
 
 const router = createBrowserRouter(
@@ -30,8 +29,7 @@ const router = createBrowserRouter(
                 }
             >
                 
-                {/* fffff */}
-                <Route index element={<Pagin/>} />  
+                <Route index element={<HomePage/>} />  
                 <Route path={routes.tasks} element={<TasksPage/>} />
                 <Route path={routes.profile} element={<ProfilePage/>} />
 
