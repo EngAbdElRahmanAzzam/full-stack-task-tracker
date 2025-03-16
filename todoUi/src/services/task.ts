@@ -8,7 +8,7 @@ export const getAllTasks = async (queryParams:string = "") => {
 } 
 
 export const fetchRecentAddedTasks = async () => {
-    const {data} = await axiosInstaceAuth.get(`${routes.tasks}?sort=add&limit=10}`)
+    const {data} = await axiosInstaceAuth.get(`${routes.tasks}?sort=add&limit=10`)
     return data.data.todos;
 };
 
@@ -20,10 +20,11 @@ export const fetchRecentUpdatedTasks= async () => {
 export const fetchTasks = async (limit:number = 10, page:number=1, ascSort:boolean = true, lastDays?:number) => {
     let sort = ''
     let days = ''
-    if(!ascSort)
-        sort = '&sort=desc'
+    if(ascSort)
+        sort = '&order=desc'
     if(lastDays)
-        days = `&days=${days}`
+        days = `&days=${lastDays}`
+
     const { data } = await axiosInstaceAuth.get(`${routes.tasks}?page=${page}&limit=${limit}`+sort+days);
     return data.data.todos;
 };

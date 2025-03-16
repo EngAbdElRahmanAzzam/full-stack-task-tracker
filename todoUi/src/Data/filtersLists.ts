@@ -21,6 +21,10 @@ export const creationTimeFilter :IOption[] = [
 
 export const numberOfTasksFilter :IOption[] = [
     {
+        "key":'5',
+        "value":5
+    },
+    {
         "key":'10',
         "value":10
     },

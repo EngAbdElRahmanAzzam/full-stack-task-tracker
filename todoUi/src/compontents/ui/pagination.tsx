@@ -1,24 +1,28 @@
-import { ReactNode, useState } from "react"
+import { ReactNode } from "react"
 import LeftArrow from "../../assets/icons/liftArrow"
 import RightArrow from "../../assets/icons/rightArrow"
 import { colors } from "../../data/styles"
 
-const Pagination = () => {
-    const last = 10;
+interface IProps{
+    page:number;
+    setPage:(val:number)=>void;
+    numPages:number
+}
+
+const Pagination = ({page, setPage}:IProps) => {
+    const numPages = 10;
     const numNeighborPage = 2
 
-     //states 
-    const [page, setPage] = useState<number>(7)
 
     //handlers 
     const nextPageHandler = () => {
-        if(page+numNeighborPage < last)
-        setPage((val) => val+1)
+        if(page+numNeighborPage < numPages)
+        setPage(page+1)
     }
 
     const prevPageHandler = () => {
         if(page-numNeighborPage > 1)
-        setPage((val) => val-1)
+        setPage(page-1)
     }
 
     const onClickPageItemHandler = (page:number) => {
@@ -52,10 +56,10 @@ const Pagination = () => {
             {pageList}
 
             {
-                (last-numNeighborPage !== page)&&<li className="text-center leading-8">. . .</li>
+                (numPages-numNeighborPage !== page)&&<li className="text-center leading-8">. . .</li>
             }
             
-            <Pagination.BtnItem handler={nextPageHandler} disableCondition={(page+numNeighborPage) == last}>
+            <Pagination.BtnItem handler={nextPageHandler} disableCondition={(page+numNeighborPage) == numPages}>
                 <RightArrow/>
             </Pagination.BtnItem>
             
@@ -100,7 +104,7 @@ Pagination.BtnItem = ({disableCondition, handler, children}:IBtnItemProps)=> {
                 className={`${colors.mainColorText} size-8 flex justify-center items-center rounded backdrop-brightness-90 disabled:cursor-not-allowed disabled:opacity-30`}
                 onClick={()=>handler()}
                 disabled={(disableCondition)?true:false}
-                // disabled={(page-2 > 1)?false:truepage+2 < last}
+                // disabled={(page-2 > 1)?false:truepage+2 < numPages}
             >
                 {children}
             </button>

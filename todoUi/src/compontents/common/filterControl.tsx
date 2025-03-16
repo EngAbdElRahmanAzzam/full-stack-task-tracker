@@ -10,10 +10,11 @@ import FilterButton from './filterButton';
 interface IProps {
     setParam:(val:number)=>void
     options:IOption[]
+    setQuery:(val:unknown)=>void
     children:ReactNode
 }
 
-const FilterControl = ({setParam, options,children}:IProps) => {
+const FilterControl = ({setParam, options,setQuery,children}:IProps) => {
     //states
     const [isShow, setIsShow] = useState<boolean>(false);
     const [indexChoice, setIndexChoice] = useState<number>(0);
@@ -24,12 +25,14 @@ const FilterControl = ({setParam, options,children}:IProps) => {
     const resetParam = () => {
         setIndexChoice(0)
         setParam(options[0].value)
+        setQuery( (val:number)=> val+1)
         toggleMenu()
     }
 
     const choiceParamHandler = (index:number)=> {
         setIndexChoice(index)
         setParam(options[index].value)
+        setQuery( (val:number)=> val+1)
     } 
 
     //renders 
