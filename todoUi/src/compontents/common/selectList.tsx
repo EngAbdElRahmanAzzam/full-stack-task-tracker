@@ -1,24 +1,25 @@
-import {ReactNode, SelectHTMLAttributes} from 'react'
+import {SelectHTMLAttributes} from 'react'
+import { colors } from '../../data/styles';
 
 interface IProps extends SelectHTMLAttributes<HTMLSelectElement>{
     className?:string;
-    children:ReactNode;
+    optionsStr:string;
 }
 
-const SelectList = ({className,children, ...reset}:IProps)=>{
-
+const SelectList = ({className,optionsStr, ...reset}:IProps)=>{
+    const options = optionsStr.split(',')
+    //renders 
+    const OptionList = options.map((curr,index) => <option key={index} className={colors.mainColorBgHover+`hover:bg-indigo-600`}>{curr}</option>)
     return(
         <div>
-        <select
-            {...reset}
-            name="HeadlineAct"
-            id="HeadlineAct"
-            className={`mt-1.5 rounded-lg border-gray-300 text-gray-700 sm:text-sm ${className} focus:outline-none`}
-        >
-            {
-                children
-            }
-        </select>
+            <select
+                {...reset}
+                className={`${colors.mainColorText} py-1 px-2 mt-1.5 rounded-lg  sm:text-sm cursor-pointer outline-none ${className}`}
+            >
+                {
+                    OptionList
+                }
+            </select>
         </div>
     )
 }

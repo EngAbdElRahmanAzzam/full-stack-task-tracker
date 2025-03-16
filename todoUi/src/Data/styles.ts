@@ -7,6 +7,7 @@ export const styles = {
 
 export const colors = {
     mainColorBg : "bg-indigo-600",
+    mainColorBgHover : "hover:bg-indigo-600",
     mainColorText : "text-indigo-600",
     mainBorder :"border-indigo-600",
     mainBorderFocus :"focus:border-indigo-600",

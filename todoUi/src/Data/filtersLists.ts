@@ -1,4 +1,5 @@
 import { IOption } from "../interfaces/ui";
+export const filterSelectionGenerate = "5,10,20,30"
 
 export const creationTimeFilter :IOption[] = [
     {

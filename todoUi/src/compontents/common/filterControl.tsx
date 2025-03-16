@@ -1,4 +1,4 @@
-import {ReactNode, useState} from 'react'
+import {ReactNode, useState, Dispatch, SetStateAction} from 'react'
 import { colors, styles } from '../../data/styles';
 import CloseIcon from '../../assets/icons/closeIcon';
 import { IOption } from '../../interfaces/ui';
@@ -10,7 +10,7 @@ import FilterButton from './filterButton';
 interface IProps {
     setParam:(val:number)=>void
     options:IOption[]
-    setQuery:(val:unknown)=>void
+    setQuery: Dispatch<SetStateAction<number>>;
     children:ReactNode
 }
 

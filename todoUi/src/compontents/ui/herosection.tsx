@@ -12,6 +12,7 @@ import { stringValidation } from "../../utils/validation"
 import {faker} from '@faker-js/faker'
 import Error from "../common/error"
 import SelectList from "../common/selectList"
+import { filterSelectionGenerate } from "../../data/filtersLists"
 
 
 interface IProps{
@@ -140,12 +141,8 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
                     Generate Todos
                     </Button>
                     
-                    <SelectList value={numTodo} onChange={(e)=>{setNumTodo(+e.target.value)}}>
-                        <option>5</option>
-                        <option>10</option>
-                        <option>50</option>
-                        <option>100</option>
-                    </SelectList>
+                    <SelectList optionsStr={filterSelectionGenerate} value={numTodo} onChange={(e)=>{setNumTodo(+e.target.value)}}/>
+                    
                 </div>
                 </div>
             </div>
