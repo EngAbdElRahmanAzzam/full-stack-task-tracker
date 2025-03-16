@@ -10,8 +10,8 @@ interface IProps{
 const FormBtn = ({children, isSubmitting}:IProps) => {
   return (
     <button 
-    disabled={isSubmitting} 
-    className={`${colors.mainColorBg} ${dimentions.fieldFormW} ${colors.color2Text} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}
+      disabled={isSubmitting} 
+      className={`${colors.mainColorBg} ${dimentions.fieldFormW} ${colors.color2Text} py-2 mt-3 disabled:cursor-not-allowed disabled:opacity-30`}
     >
     {isSubmitting?<Loader />:children}
     </button>
