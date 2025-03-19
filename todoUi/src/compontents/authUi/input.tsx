@@ -5,19 +5,19 @@ import { colors, dimentions } from '../../data/styles';
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement>{
     className?:string;
     id:string;
-    register:UseFormRegisterReturn<string>;
+    register?:UseFormRegisterReturn<string>;
     children:ReactNode
-    error:FieldError | undefined;
+    error:FieldError | undefined | boolean |string;
 }  
 
 interface ILabelProps {
     id:string;
     children:ReactNode
-    error:FieldError | undefined;
+    error:FieldError  | undefined | boolean |string;
 }
 
 interface IErrorProps{
-    error:FieldError | undefined;
+    error:FieldError | undefined| boolean |string;
 }
 
 const InputForm = ({id, className, register, error,children,...rest}:IInputProps)=>{
@@ -31,7 +31,7 @@ const InputForm = ({id, className, register, error,children,...rest}:IInputProps
                 id={id} 
                 className={`${dimentions.fieldFormW} py-1 mt-0 mb-2 bg-inherit border-b-2 focus:outline-none ${colors.mainBorderFocus} ${className}
                 ${(error)?"border-red-600":""}`}
-                {...register} 
+                {...register}
                 {...rest}/>
 
                 <InputForm.Error error={error}/>
@@ -82,6 +82,7 @@ InputForm.Label = ({id,error,children}:ILabelProps)=> {
         </label>
     )
 }
+
 
 InputForm.Error = ({error}:IErrorProps)=> {
     return (

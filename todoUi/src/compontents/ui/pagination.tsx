@@ -102,9 +102,8 @@ Pagination.BtnItem = ({disableCondition, handler, children}:IBtnItemProps)=> {
         <li>
             <button
                 className={`${colors.mainColorText} size-8 flex justify-center items-center rounded backdrop-brightness-90 disabled:cursor-not-allowed disabled:opacity-30`}
-                onClick={()=>handler()}
+                onClick={()=>handler(children as number)}
                 disabled={(disableCondition)?true:false}
-                // disabled={(page-2 > 1)?false:truepage+2 < numPages}
             >
                 {children}
             </button>

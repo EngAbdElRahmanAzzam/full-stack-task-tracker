@@ -131,14 +131,14 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
                     onClick={onOpenAddModel}
                     className="block w-full rounded border border-indigo-600 bg-white px-12 py-3 text-sm font-medium text-indigo-600  hover:text-white hover:bg-indigo-600 focus:outline-none active:scale-95 sm:w-auto"
                     >
-                    Add Todo
+                    Add Task
                     </Button>
 
                     <Button
                     onClick={generateTodos}
                     className="block w-full rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none active:scale-95 sm:w-auto"
                     >
-                    Generate Todos
+                    Generate Tasks
                     </Button>
                     
                     <SelectList optionsStr={filterSelectionGenerate} value={numTodo} onChange={(e)=>{setNumTodo(+e.target.value)}}/>
@@ -147,16 +147,19 @@ const HeroSection = ({numQuery, setNumQuery}:IProps)=>{
                 </div>
             </div>
         </section>
+
         <Model title="Add New Todo" isOpenModel={isOpenModel} closeModel={toggleAddModel}>
             <Input 
+                id="addTask"
                 name="title"
                 value={todoForm.title} 
                 onChange={onChangeHandler} 
+                error={msgTitle}
                 className="focus:border-indigo-600" 
             > 
                     Title
             </Input>
-            {(msgTitle!=true)?<Error msg={msgTitle as string}/>:""}
+  
             <textarea 
                 name="description"
                 value={todoForm.description} 

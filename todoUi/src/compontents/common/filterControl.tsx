@@ -1,4 +1,4 @@
-import {ReactNode, useState, Dispatch, SetStateAction} from 'react'
+import {ReactNode, useState, Dispatch, SetStateAction, useRef} from 'react'
 import { colors, styles } from '../../data/styles';
 import CloseIcon from '../../assets/icons/closeIcon';
 import { IOption } from '../../interfaces/ui';
@@ -16,9 +16,10 @@ interface IProps {
 
 const FilterControl = ({setParam, options,setQuery,children}:IProps) => {
     //states
+    const ref = useRef(null)
     const [isShow, setIsShow] = useState<boolean>(false);
     const [indexChoice, setIndexChoice] = useState<number>(0);
-
+    
     //handlers
     const toggleMenu = () => setIsShow(!isShow)
 
@@ -40,6 +41,7 @@ const FilterControl = ({setParam, options,setQuery,children}:IProps) => {
 
     return (
         <div className='relative'>
+            
             <FilterButton 
                 onClick={toggleMenu}
                 className={`flex gap-2 px-2 py-1 border-2 ${colors.mainBorder} rounded-xl`}                
@@ -47,11 +49,17 @@ const FilterControl = ({setParam, options,setQuery,children}:IProps) => {
                 {children} <DownArrowIcon className={`transition-all ${(isShow)?"rotate-180" : ""}`} />
             </FilterButton>
             {isShow&&   
-                (<div className={`bg-white w-[350px] absolute top-full m-2 py-2 rounded-lg ${styles.boxFilter}`}>
+                (<>
+                 <div className='fixed top-0 left-0 w-screen h-screen z-40' onClick={toggleMenu}></div>
+
+                <div ref={ref} className={`bg-white w-[350px] absolute top-full m-2 py-2 rounded-lg z-50 ${styles.boxFilter}`}>
+
                     <div className='px-2'>
+
                         <button onClick={toggleMenu} className='block ml-auto'>
                             <CloseIcon/>
                         </button>
+                        
                         <form name='filter'>
                             {
                                 optionList
@@ -63,7 +71,8 @@ const FilterControl = ({setParam, options,setQuery,children}:IProps) => {
                         <Button className={`${colors.mainColorBg} hover:bg-indigo-300`} onClick={toggleMenu}>Show</Button>
                         <Button className="bg-neutral-700 text-white hover:bg-neutral-300 ms-2" onClick={resetParam}>Cancel</Button>
                     </div>
-                </div>)
+                </div>
+                </>)
             }
         </div>
     )

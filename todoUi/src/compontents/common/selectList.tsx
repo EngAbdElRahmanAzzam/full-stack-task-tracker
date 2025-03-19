@@ -9,7 +9,7 @@ interface IProps extends SelectHTMLAttributes<HTMLSelectElement>{
 const SelectList = ({className,optionsStr, ...reset}:IProps)=>{
     const options = optionsStr.split(',')
     //renders 
-    const OptionList = options.map((curr,index) => <option key={index} className={colors.mainColorBgHover+`hover:bg-indigo-600`}>{curr}</option>)
+    const OptionList = options.map((option,index) => <option key={index} className={colors.mainColorBgHover}>{option}</option>)
     return(
         <div>
             <select
