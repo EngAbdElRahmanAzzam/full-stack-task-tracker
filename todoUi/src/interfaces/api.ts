@@ -11,3 +11,8 @@ export interface IAuthRsponse {
         user:IUserModel;
     }
 }
+
+export interface ITaskStatus{
+    tasks:string;
+    complete:string;
+}

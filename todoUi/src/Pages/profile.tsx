@@ -4,23 +4,29 @@ import UnCompletedTaskIcon from "../assets/icons/uncompletedIcon"
 import Button from "../compontents/common/button"
 import Model from "../compontents/common/model"
 import Loader from "../compontents/common/loader"
-import { useState  } from "react"
+import { useEffect, useState  } from "react"
 import { axiosInstaceAuth } from "../services/axios.config"
 import { errorToast, successToast } from "../utils/toasts"
 import { AxiosError } from "axios"
-import { IErrorRespone } from "../interfaces/api"
+import { IErrorRespone, ITaskStatus } from "../interfaces/api"
+import { getCredentials } from "../utils/localStorage"
+import { getAllTaskStatus } from "../services/task"
+import { colors } from "../data/styles"
 
 type TMsgWarning = "Account" | "Tasks" | ""
 
 const ProfilePage = () => {
-    const user = JSON.parse(localStorage?.getItem('user') || "")
+
+    const user = getCredentials()
     //states 
     const [msgWarning , setMsgWarning] = useState<TMsgWarning>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isOpenModel, setIsOpenModel] = useState<boolean>(false)
+    const [tasksStatus, setTasksStatus] = useState<ITaskStatus>({tasks:'',complete:''})
 
     // handlesr
     const toggleModel = ()=> setIsOpenModel((prev) => !prev)
+
     const onClickOpenModelBtn = (msg:TMsgWarning)=>{
         setMsgWarning(msg)
         toggleModel()
@@ -56,6 +62,19 @@ const ProfilePage = () => {
             setIsLoading(false)
         }
     }
+    //life cycle effects
+
+    useEffect(
+        ()=>{
+            const fetchStatus = async () => {
+                const data = await getAllTaskStatus()
+                setTasksStatus(data)
+            }
+
+            fetchStatus()
+        }
+        ,[])
+
     return (
         <div className="pt-24">
             <div className="max-w-2xl pt-8 mx-4 sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto border shadow-2xl rounded-lg">
@@ -75,18 +94,22 @@ const ProfilePage = () => {
                 </div>
 
                 <ul className="w-7/12 py-4 mt-2 mx-auto text-neutral-700 flex items-center justify-around">
+
                     <li className="flex flex-col items-center justify-around">
                         <TaskIcon className="w-7"/>
-                        <div>2k</div>
+                        <div className={`font-extrabold`}>{tasksStatus.tasks}</div>
                     </li>
+
                     <li className="flex flex-col items-center justify-between">
-                        <CompletedTaskIcon/>
-                        <div>10k</div>
+                        <CompletedTaskIcon className={`size-11 ${colors.mainColorText} translate-y-2`}/>
+                        <div className="font-extrabold">{tasksStatus.complete}</div>
                     </li>
+
                     <li className="flex flex-col items-center justify-around">
                         <UnCompletedTaskIcon className="w-7"/>
-                        <div>15</div>
+                        <div className="font-extrabold">{+tasksStatus?.tasks - +tasksStatus?.complete}</div>
                     </li>
+
                 </ul>
 
                 <div className="py-2 flex justify-center gap-1 border-t-2 border-t-slate-700">

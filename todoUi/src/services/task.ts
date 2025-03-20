@@ -2,9 +2,9 @@ import { routes } from ".";
 import { ITaskModel } from "../interfaces/models";
 import { axiosInstaceAuth } from "./axios.config"
 
-export const getAllTasks = async (queryParams:string = "") => {
-    const {data} = await axiosInstaceAuth.get(`${routes.tasks}?${queryParams}`)
-    return data.data.todos
+export const getAllTaskStatus= async () => {
+    const {data} = await axiosInstaceAuth.get(`${routes.tasks}?limit=100000`)
+    return data.data.status
 } 
 
 export const fetchRecentAddedTasks = async () => {
