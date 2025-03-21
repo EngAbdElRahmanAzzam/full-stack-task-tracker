@@ -6,6 +6,7 @@ export default {
   theme: {
     extend: {
       animation: {
+        scaleY:"scale-y 1s linear infinite",
         meteor: "meteor 0.2s linear infinite",
         scaleUp: "scale-up4 1s linear infinite",  
       },
@@ -21,6 +22,10 @@ export default {
             transform: "rotate(215deg) translateX(-500px)",
             opacity: "",
           },
+          scaleY:{
+            "0%": { width: "50px"},
+            "100%": { width: "100%"},
+          }
       }
     }
   },

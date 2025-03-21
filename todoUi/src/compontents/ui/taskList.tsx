@@ -11,6 +11,9 @@ import { errorToast, successToast } from "../../utils/toasts"
 import CheckIcon from "../../assets/icons/chechIcon"
 import { triggerBasicConfetti } from "../../utils/confettiEffect"
 import NoTaskFound from "../common/noTaskFound"
+import OptionBtn from "../../assets/icons/optionBtn"
+import { styles } from "../../data/styles"
+import Skeleton from "../common/skeleton"
 
 interface IProps{
     numQuery:number;
@@ -23,6 +26,7 @@ interface IProps{
 const TasksList = ({numQuery, setNumQuery,isLoading ,tasks}:IProps) => 
 {
     //states
+    const [taskCurrIndex , setTaskCurrIndex] = useState<number>(-1) 
     const [isLoadingUpdate, setIsLoadingUpdate] = useState<boolean>(false)
     const [isLoadingUpdateStatus, setLoadingUpdateStatus] = useState<boolean>(false)
     const [isLoadingDelete, setIsLoadingDelete] = useState<boolean>(false)
@@ -36,11 +40,18 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,tasks}:IProps) =>
 
     //handlers
     const toggleDeleteModel = ()=> setIsOpenDeleteModel(prev => !prev)
-
     const toggleUpdateModel = ()=> setIsOpenUpdateModel(prev => !prev)
 
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         setSelectedTodo({...selectedTodo,[e.target.name]:e.target.value})
+    }
+
+    const openGroupBtns = (index:number) => {
+        setTaskCurrIndex(index)
+    }
+
+    const closeGroupBtns = () => {
+        setTaskCurrIndex(-1)
     }
 
 
@@ -135,18 +146,19 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,tasks}:IProps) =>
 
     //renders
     if(isLoading)
-        return <Loader/>
+        return Array(8).fill(0).map((_, index)=> <Skeleton key={index} />)
 
     if(tasks == undefined || tasks.length == 0)
     {
         return <NoTaskFound/>
     }
 
-    const todosList = tasks.map((currTodo:ITaskModel)=>(
+    const todosList = tasks.map((currTodo:ITaskModel,index)=>(
             <tr 
-            className="odd:bg-white even:bg-gray-100" 
-            onClick={()=>setSelectedTodo(currTodo)}
-            key={currTodo._id}>
+                className="odd:bg-white even:bg-gray-100" 
+                onClick={()=>setSelectedTodo(currTodo)}
+                key={currTodo._id}
+            >
                 <td className="flex justify-between items-center px-4 py-2 lg:px-16">
                     <div className="flex gap-1">
                         {   
@@ -160,9 +172,24 @@ const TasksList = ({numQuery, setNumQuery,isLoading ,tasks}:IProps) =>
                         }   
                         <p className="cursor-pointer" onClick={toggleUpdateModel}>{currTodo.title}</p>
                     </div>
-                    <div>
-                        <Button className="bg-indigo-600 hover:bg-indigo-300 my-2" onClick={toggleUpdateModel}>Update</Button>
-                        <Button className="bg-neutral-700 text-white ms-2 hover:bg-neutral-300 my-2" onClick={toggleDeleteModel}>Remove</Button>
+
+                    <div className="relative">
+                        <button onClick={()=>openGroupBtns(index)}>
+                            <OptionBtn />
+                        </button>
+
+                        {(index == taskCurrIndex) && ( 
+                           <>
+                                <div className="absolute top-4 right-6 z-50">
+                                    <div className={`inline-flex rounded-lg bg-gray-100 px-2 ${styles.boxFilter}`}>
+                                        <Button className="bg-indigo-600 hover:bg-indigo-300 my-2" onClick={toggleUpdateModel}>Update</Button>
+                                        <Button className="bg-neutral-700 text-white ms-2 hover:bg-neutral-300 my-2"  onClick={toggleDeleteModel}>Remove</Button>
+                                    </div>
+                                </div>
+
+                                <div className='fixed top-0 left-0 w-screen h-screen z-40' onClick={closeGroupBtns}></div>
+                           </>
+                        )}
                     </div>
                 </td>
             </tr>

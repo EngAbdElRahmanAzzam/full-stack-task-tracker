@@ -13,7 +13,7 @@ const Model =({isOpenModel, closeModel , children , title}:IProps)=> {
     return (
         <>
           <Transition appear show={isOpenModel} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeModel}>
+            <Dialog as="div" className="relative z-50" onClose={closeModel}>
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
